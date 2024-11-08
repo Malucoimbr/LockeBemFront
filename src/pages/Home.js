@@ -1,56 +1,40 @@
-import React, {useState , useEffect} from 'react'
-import { Link, useParams } from 'react-router-dom'
-import axios from 'axios'
+// src/pages/Home.js
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
-
-    const [users, setUsers] = useState([]);
-
-    const {id} = useParams();
-
-    useEffect(() => {
-        loadUsers();
-    },[]);
-
-    const loadUsers=async()=>{
-        const result= await axios.get("http://localhost:8080/users")
-        setUsers(result.data)
-    }
-
-    const deleteUser= async(id)=>{
-        await axios.delete(`http://localhost:8080/user/${id}`)
-        loadUsers()
-    }
-    
   return (
     <div className="container">
-        <div className="py-4"></div>
-        <table class="table border shadow">
-        <thead>
-            <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">UserName</th>
-            <th scope="col">Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            {users.map((user, index)=>(
-                <tr>
-                <th scope="row" key={index}>{index+1}</th>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>@{user.email}</td>
-                <td>
-                    <Link className="btn btn-primary mx-2" to={`/viewuser/${user.id}`}>View</Link >
-                    <Link className="btn btn-outline-primary mx-2" to={`/edituser/${user.id}`}>Edit</Link >
-                    <button className="btn btn-danger mx-2" onClick={()=>deleteUser(user.id)}>Delete</button >
-                </td>
-                </tr>
-            ))}
-           
-        </tbody>
-        </table>
+      <h1 className="text-center my-4">Bem-vindo ao Sistema de Gestão</h1>
+      
+      <div className="row">
+        {/* Seção de Usuários */}
+        <div className="col-md-4">
+          <h3>Usuários</h3>
+          <p>Gerencie os usuários do sistema.</p>
+          <div className="d-grid gap-2">
+            <Link to="/users" className="btn btn-primary">Gerenciar Usuários</Link>
+          </div>
+        </div>
+
+        {/* Seção de Carros */}
+        <div className="col-md-4">
+          <h3>Carros</h3>
+          <p>Gerencie os carros no sistema.</p>
+          <div className="d-grid gap-2">
+            <Link to="/cars" className="btn btn-primary">Gerenciar Carros</Link>
+          </div>
+        </div>
+
+        {/* Seção de Filiais */}
+        <div className="col-md-4">
+          <h3>Filiais</h3>
+          <p>Gerencie as filiais do sistema.</p>
+          <div className="d-grid gap-2">
+            <Link to="/filiais" className="btn btn-primary">Gerenciar Filiais</Link>
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
