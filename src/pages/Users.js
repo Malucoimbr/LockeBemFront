@@ -1,20 +1,32 @@
-// src/pages/Users.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaUserPlus, FaListAlt } from 'react-icons/fa';
 
 export default function Users() {
   return (
-    <div className="container">
+    <div className="container min-vh-100 d-flex flex-column">
       <h1 className="text-center my-4">Gestão de Usuários</h1>
-      <div className="row">
-        <div className="col-md-6">
-          <div className="d-grid gap-2">
-            <Link to="/adduser" className="btn btn-success">Adicionar Usuário</Link>
+      
+      <div className="row justify-content-center">
+        <div className="col-md-4 mb-4">
+          <div className="card shadow-sm">
+            <div className="card-body text-center">
+              <FaUserPlus size={40} className="mb-3" />
+              <h4>Adicionar Usuário</h4>
+              <p>Adicione um novo usuário ao sistema.</p>
+              <Link to="/adduser" className="btn btn-success btn-lg w-100">Adicionar Usuário</Link>
+            </div>
           </div>
         </div>
-        <div className="col-md-6">
-          <div className="d-grid gap-2">
-            <Link to="/listusers" className="btn btn-info">Listar Usuários</Link>
+
+        <div className="col-md-4 mb-4">
+          <div className="card shadow-sm">
+            <div className="card-body text-center">
+              <FaListAlt size={40} className="mb-3" />
+              <h4>Listar Usuários</h4>
+              <p>Visualize todos os usuários cadastrados no sistema.</p>
+              <Link to="/listusers" className="btn btn-info btn-lg w-100">Listar Usuários</Link>
+            </div>
           </div>
         </div>
       </div>

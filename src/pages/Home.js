@@ -1,24 +1,24 @@
-// src/pages/Home.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaUsers, FaCar, FaBuilding } from 'react-icons/fa';
 
 export default function Home() {
   return (
-    <div className="container">
-      <h1 className="text-center my-4">Bem-vindo ao Sistema de Gestão</h1>
-      
-      <div className="row">
-        {/* Seção de Usuários */}
-        <div className="col-md-4">
-          <h3>Usuários</h3>
-          <p>Gerencie os usuários do sistema.</p>
+    <div className="container min-vh-100 d-flex flex-column">
+      <h1 className="text-center my-4 mb-5">Bem-vindo ao Sistema de Gestão</h1>
+
+      <div className="row justify-content-center">
+        <div className="col-md-4 text-center mb-4">
+          <FaUsers size={50} />
+          <h3>Clientes</h3>
+          <p>Gerencie os clientes no sistema.</p>
           <div className="d-grid gap-2">
-            <Link to="/users" className="btn btn-primary">Gerenciar Usuários</Link>
+            <Link to="/users" className="btn btn-primary">Gerenciar Clientes</Link>
           </div>
         </div>
 
-        {/* Seção de Carros */}
-        <div className="col-md-4">
+        <div className="col-md-4 text-center mb-4">
+          <FaCar size={50} />
           <h3>Carros</h3>
           <p>Gerencie os carros no sistema.</p>
           <div className="d-grid gap-2">
@@ -26,8 +26,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Seção de Filiais */}
-        <div className="col-md-4">
+        <div className="col-md-4 text-center mb-4">
+          <FaBuilding size={50} />
           <h3>Filiais</h3>
           <p>Gerencie as filiais do sistema.</p>
           <div className="d-grid gap-2">
