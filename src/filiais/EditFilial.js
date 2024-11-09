@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default function EditFilial() {
   const navigate = useNavigate();
-  const { id } = useParams();  // Obtém o 'id' da URL
+  const { codigoFilial } = useParams();  // Obtém o 'codigoFilial' da URL
 
   const [filial, setFilial] = useState({
     nome: '',
@@ -19,11 +19,11 @@ export default function EditFilial() {
 
   useEffect(() => {
     loadFilial();
-  }, [id]);
+  }, [codigoFilial]);
 
   const loadFilial = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/api/filiais/${id}`);
+      const result = await axios.get(`http://localhost:8080/api/filiais/${codigoFilial}`);
       setFilial(result.data);
     } catch (error) {
       console.error('Erro ao carregar os dados da filial.', error);
@@ -36,18 +36,12 @@ export default function EditFilial() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await axios.put(`http://localhost:8080/api/filiais/${id}`, filial, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      
-      navigate('/listfilial');
+      await axios.put(`http://localhost:8080/api/filiais/codigo/${codigoFilial}`, filial);
+      navigate("/listfilial");
     } catch (error) {
-      console.error('Erro ao atualizar filial!', error);
-      alert('Erro ao atualizar a filial. Verifique os dados e tente novamente.');
+      console.error('Erro ao atualizar a filial!', error);
+      alert('Erro ao atualizar a filial. Tente novamente.');
     }
   };
 
@@ -58,6 +52,17 @@ export default function EditFilial() {
           <h2 className="text-center m-4">Editar Filial</h2>
 
           <form onSubmit={onSubmit}>
+            <div className="mb-3">
+              <label className="form-label">Código da Filial</label>
+              <input
+                type="text"
+                className="form-control"
+                name="codigoFilial"
+                value={filial.codigoFilial}
+                onChange={onInputChange}
+                readOnly  // Agora o campo 'codigoFilial' é apenas leitura
+              />
+            </div>
             <div className="mb-3">
               <label className="form-label">Nome</label>
               <input
@@ -120,17 +125,6 @@ export default function EditFilial() {
                 className="form-control"
                 name="telefone"
                 value={filial.telefone}
-                onChange={onInputChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Código da Filial</label>
-              <input
-                type="text"
-                className="form-control"
-                name="codigoFilial"
-                value={filial.codigoFilial}
                 onChange={onInputChange}
                 required
               />

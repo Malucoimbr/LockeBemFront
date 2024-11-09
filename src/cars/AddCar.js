@@ -4,30 +4,25 @@ import axios from 'axios';
 export default function AddCar() {
     const [placa, setPlaca] = useState('');
     const [modelo, setModelo] = useState('');
-    const [marca, setMarca] = useState('');
-    const [ano, setAno] = useState('');
-    const [cor, setCor] = useState('');
-    const [filialId, setFilialId] = useState('');
-    const [error, setError] = useState(''); // Para armazenar mensagens de erro
+    const [anoFab, setAnoFab] = useState('');
+    const [km, setKm] = useState('');
+    const [tipoCarro, setTipoCarro] = useState('');
+    const [codigoFilial, setCodigoFilial] = useState('');
+    const [error, setError] = useState(''); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        // Enviar o objeto carro com a filial incluindo o ID
         const newCar = {
             placa,
             modelo,
-            marca,
-            ano,
-            cor,
-            filial: {
-                id: filialId // Enviando o ID da filial
-            }
+            anoFab,
+            km,
+            tipoCarro,
+            codigoFilial
         };
-    
+
         try {
-            // A URL agora deve ser apenas "/carro", já que estamos enviando o objeto completo
-            const response = await axios.post('http://localhost:8080/carro', newCar);
+            const response = await axios.post('http://localhost:8080/api/carros', newCar);
             alert('Carro adicionado com sucesso!');
         } catch (error) {
             console.error("Erro completo:", error);
@@ -62,46 +57,46 @@ export default function AddCar() {
                     />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="marca" className="form-label">Marca</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="marca"
-                        value={marca}
-                        onChange={(e) => setMarca(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="ano" className="form-label">Ano</label>
+                    <label htmlFor="anoFab" className="form-label">Ano de Fabricação</label>
                     <input
                         type="number"
                         className="form-control"
-                        id="ano"
-                        value={ano}
-                        onChange={(e) => setAno(e.target.value)}
+                        id="anoFab"
+                        value={anoFab}
+                        onChange={(e) => setAnoFab(e.target.value)}
                         required
                     />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="cor" className="form-label">Cor</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="cor"
-                        value={cor}
-                        onChange={(e) => setCor(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="filialId" className="form-label">ID da Filial</label>
+                    <label htmlFor="km" className="form-label">Quilometragem</label>
                     <input
                         type="number"
                         className="form-control"
-                        id="filialId"
-                        value={filialId}
-                        onChange={(e) => setFilialId(e.target.value)}
+                        id="km"
+                        value={km}
+                        onChange={(e) => setKm(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="tipoCarro" className="form-label">Tipo de Carro</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="tipoCarro"
+                        value={tipoCarro}
+                        onChange={(e) => setTipoCarro(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="codigoFilial" className="form-label">Código da Filial</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="codigoFilial"
+                        value={codigoFilial}
+                        onChange={(e) => setCodigoFilial(e.target.value)}
                         required
                     />
                 </div>

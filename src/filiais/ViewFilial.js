@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default function ViewFilial() {
-  const { id } = useParams();  // Obtém o 'id' da URL
+  const { codigoFilial } = useParams();  // Obtém o 'id' da URL
   const [filial, setFilial] = useState({
     nome: '',
     rua: '',
@@ -20,12 +20,12 @@ export default function ViewFilial() {
 
   useEffect(() => {
     loadFilial();
-  }, [id]);  // Recarrega os dados sempre que o 'id' mudar
+  }, [codigoFilial]);  // Recarrega os dados sempre que o 'id' mudar
 
   // Função para carregar a filial com o id
   const loadFilial = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/api/filiais/${id}`);
+      const result = await axios.get(`http://localhost:8080/api/filiais/${codigoFilial}`);
       setFilial(result.data);
       setLoading(false);
     } catch (error) {
@@ -52,13 +52,14 @@ export default function ViewFilial() {
           </div>
           <div className="card-body">
             <ul className="list-group list-group-flush">
+            <li className="list-group-item"><strong>Código da Filial:</strong> {filial.codigoFilial}</li>
               <li className="list-group-item"><strong>Nome:</strong> {filial.nome}</li>
               <li className="list-group-item"><strong>Rua:</strong> {filial.rua}</li>
               <li className="list-group-item"><strong>Número:</strong> {filial.numero}</li>
               <li className="list-group-item"><strong>Cidade:</strong> {filial.cidade}</li>
               <li className="list-group-item"><strong>Estado:</strong> {filial.estado}</li>
               <li className="list-group-item"><strong>Telefone:</strong> {filial.telefone}</li>
-              <li className="list-group-item"><strong>Código da Filial:</strong> {filial.codigoFilial}</li>
+    
               <li className="list-group-item"><strong>CNPJ:</strong> {filial.cnpj}</li>
             </ul>
           </div>

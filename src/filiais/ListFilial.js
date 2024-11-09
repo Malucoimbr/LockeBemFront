@@ -7,11 +7,9 @@ export default function ListFilial() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     loadFiliais();
   }, []);
-
 
   const loadFiliais = async () => {
     try {
@@ -24,10 +22,10 @@ export default function ListFilial() {
     }
   };
 
-  const deleteFilial = async (id) => {
+  const deleteFilial = async (codigoFilial) => {
     try {
-      await axios.delete(`http://localhost:8080/api/filiais/${id}`); 
-      setFiliais(filiais.filter(filial => filial.id !== id));
+      await axios.delete(`http://localhost:8080/api/filiais/${codigoFilial}`);
+      setFiliais(filiais.filter(filial => filial.codigoFilial !== codigoFilial));
     } catch (error) {
       console.error('Erro ao deletar a filial.', error);
     }
@@ -47,34 +45,32 @@ export default function ListFilial() {
       <table className="table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Código da Filial</th>
             <th>Nome</th>
             <th>Rua</th>
             <th>Número</th>
             <th>Cidade</th>
             <th>Estado</th>
             <th>Telefone</th>
-            <th>Codigo da Filial</th>
             <th>CNPJ</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
           {filiais.map(filial => (
-            <tr key={filial.id}>
-              <td>{filial.id}</td>
+            <tr key={filial.codigoFilial}>
+              <td>{filial.codigoFilial}</td>
               <td>{filial.nome}</td>
               <td>{filial.rua}</td>
               <td>{filial.numero}</td>
               <td>{filial.cidade}</td>
               <td>{filial.estado}</td>
               <td>{filial.telefone}</td>
-              <td>{filial.codigoFilial}</td>
               <td>{filial.cnpj}</td>
               <td>
-                <Link to={`/viewfilial/${filial.id}`} className="btn btn-info">Ver</Link>
-                <Link to={`/editfilial/${filial.id}`} className="btn btn-outline-primary mx-2">Editar</Link>
-                <button onClick={() => deleteFilial(filial.id)} className="btn btn-danger mx-2">Deletar</button>
+                <Link to={`/viewfilial/${filial.codigoFilial}`} className="btn btn-info">Ver</Link>
+                <Link to={`/editfilial/${filial.codigoFilial}`} className="btn btn-outline-primary mx-2">Editar</Link>
+                <button onClick={() => deleteFilial(filial.codigoFilial)} className="btn btn-danger mx-2">Deletar</button>
               </td>
             </tr>
           ))}
