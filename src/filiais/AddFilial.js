@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Importa o useNavigate
+import { useNavigate } from 'react-router-dom';
 
 export default function AddFilial() {
     const [cidade, setCidade] = useState('');
@@ -10,14 +10,13 @@ export default function AddFilial() {
     const [numero, setNumero] = useState('');
     const [rua, setRua] = useState('');
     const [telefone, setTelefone] = useState('');
-    const [error, setError] = useState(''); // Para armazenar mensagens de erro
+    const [cnpj, setCnpj] = useState('');  
+    const [error, setError] = useState(''); 
 
-    const navigate = useNavigate();  // Hook para navegação
-
+    const navigate = useNavigate(); 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Checa se o código da filial já existe
         const filialCodeExists = await checkFilialCodeExists(codigoFilial);
         if (filialCodeExists) {
             setError("Código da filial já cadastrado!");
@@ -31,14 +30,13 @@ export default function AddFilial() {
             nome,
             numero,
             rua,
-            telefone
+            telefone,
+            cnpj,
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/filial', newFilial);
+            const response = await axios.post('http://localhost:8080/api/filiais', newFilial);
             
-
-            // Limpa os campos após adicionar a filial
             setCidade('');
             setEstado('');
             setCodigoFilial('');
@@ -47,38 +45,38 @@ export default function AddFilial() {
             setRua('');
             setTelefone('');
             setError('');
+            setCnpj('');
 
-            // Redireciona para a página de listagem
-            navigate('/listfilial');  // Navega para a listagem de filiais
-
+            navigate('/listfilial');  
         } catch (error) {
-            // Exibe o erro retornado pelo servidor
+         
             if (error.response) {
-                // O servidor respondeu com um status de erro
-                console.error("Erro de resposta do servidor:", error.response);
-                setError(error.response.data.message || "Erro desconhecido ao adicionar filial.");
+         
+                setError(error.response.data || "Erro desconhecido ao adicionar filial.");
             } else if (error.request) {
-                // A requisição foi feita, mas não houve resposta
-                console.error("Erro na requisição:", error.request);
+          
                 setError("Erro ao enviar a requisição para o servidor.");
             } else {
-                // Outro erro (como falha ao configurar a requisição)
-                console.error("Erro inesperado:", error.message);
+       
                 setError("Erro inesperado.");
             }
+            
         }
     };
 
-    // Função para verificar se o código da filial já existe
+
     const checkFilialCodeExists = async (codigoFilial) => {
         try {
-            const response = await axios.get(`http://localhost:8080/filial/codigo/${codigoFilial}`);
-            return response.data; // Retorna true ou false com base na existência do código
+          
+            const response = await axios.get(`http://localhost:8080/api/filiais/codigo/${codigoFilial}`);
+            return response.data; 
         } catch (error) {
             console.error("Erro ao verificar o código da filial:", error);
-            return false; // Se erro, o código não existe
+            return false; 
         }
     };
+
+    console.log(cnpj); 
 
     return (
         <div>
@@ -117,6 +115,19 @@ export default function AddFilial() {
                         required
                     />
                 </div>
+
+                <div className="mb-3">
+                    <label htmlFor="cnpj" className="form-label">CNPJ</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="cnpj"
+                        value={cnpj}  
+                        onChange={(e) => setCnpj(e.target.value)}  
+                        required
+                    />
+                </div>
+
                 <div className="mb-3">
                     <label htmlFor="estado" className="form-label">Estado</label>
                     <input

@@ -13,44 +13,40 @@ export default function EditFilial() {
     cidade: '',
     estado: '',
     telefone: '',
+    codigoFilial: '',
+    cnpj: ''
   });
 
   useEffect(() => {
     loadFilial();
   }, [id]);
 
-  // Carregar a filial com o id
   const loadFilial = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/filial/${id}`);
+      const result = await axios.get(`http://localhost:8080/api/filiais/${id}`);
       setFilial(result.data);
     } catch (error) {
       console.error('Erro ao carregar os dados da filial.', error);
     }
   };
 
-  // Função para lidar com as mudanças nos campos de entrada
   const onInputChange = (e) => {
     setFilial({ ...filial, [e.target.name]: e.target.value });
   };
 
-  // Função para lidar com o envio do formulário
   const onSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Realiza a requisição PUT para atualizar a filial
-      const response = await axios.put(`http://localhost:8080/filial/${id}`, filial, {
+      const response = await axios.put(`http://localhost:8080/api/filiais/${id}`, filial, {
         headers: {
           'Content-Type': 'application/json',
         }
       });
       
-      // Após a atualização, redireciona para a lista de filiais
       navigate('/listfilial');
     } catch (error) {
       console.error('Erro ao atualizar filial!', error);
-      // Exibe uma mensagem de erro, se necessário
       alert('Erro ao atualizar a filial. Verifique os dados e tente novamente.');
     }
   };
@@ -124,6 +120,28 @@ export default function EditFilial() {
                 className="form-control"
                 name="telefone"
                 value={filial.telefone}
+                onChange={onInputChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Código da Filial</label>
+              <input
+                type="text"
+                className="form-control"
+                name="codigoFilial"
+                value={filial.codigoFilial}
+                onChange={onInputChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">CNPJ</label>
+              <input
+                type="text"
+                className="form-control"
+                name="cnpj"
+                value={filial.cnpj}
                 onChange={onInputChange}
                 required
               />

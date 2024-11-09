@@ -1,28 +1,39 @@
-// users/ListUser.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default function ListUser() {
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     loadUsers();
   }, []);
 
   const loadUsers = async () => {
-    const result = await axios.get("http://localhost:8080/users");
-    setUsers(result.data);
+    try {
+      const result = await axios.get("http://localhost:8080/api/users"); 
+      setUsers(result.data);
+    } catch (err) {
+      setError('Erro ao carregar usuários');
+      console.error(err);
+    }
   };
 
   const deleteUser = async (id) => {
-    await axios.delete(`http://localhost:8080/user/${id}`);
-    loadUsers();
+    try {
+      await axios.delete(`http://localhost:8080/api/users/${id}`); 
+      loadUsers();
+    } catch (err) {
+      setError('Erro ao excluir usuário');
+      console.error(err);
+    }
   };
 
   return (
     <div className="container">
       <div className="py-4"></div>
+      {error && <div className="alert alert-danger">{error}</div>}
       <table className="table border shadow">
         <thead>
           <tr>
@@ -36,8 +47,8 @@ export default function ListUser() {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
-            <tr key={index}>
+          {users.map((user) => (
+            <tr key={user.id}>
               <th scope="row">{user.id}</th>
               <td>{user.name}</td>
               <td>{user.email}</td>

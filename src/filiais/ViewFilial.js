@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default function ViewFilial() {
+  const { id } = useParams();  // Obtém o 'id' da URL
   const [filial, setFilial] = useState({
     nome: '',
     rua: '',
@@ -10,49 +11,63 @@ export default function ViewFilial() {
     cidade: '',
     estado: '',
     telefone: '',
+    codigoFilial: '',
+    cnpj: ''
   });
 
-  const { id } = useParams();  // Obtém o 'id' da URL
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     loadFilial();
   }, [id]);  // Recarrega os dados sempre que o 'id' mudar
 
+  // Função para carregar a filial com o id
   const loadFilial = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/filial/${id}`);
+      const result = await axios.get(`http://localhost:8080/api/filiais/${id}`);
       setFilial(result.data);
+      setLoading(false);
     } catch (error) {
-      console.error('Erro ao carregar os dados da filial.', error);
+      setError('Erro ao carregar os dados da filial.');
+      setLoading(false);
     }
   };
 
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center m-4">Detalhes da Filial</h2>
-
-          <div className="card">
-            <div className="card-header">
-              Detalhes da Filial Código: {filial.codigoFilial} {/* Exibindo o código da filial */}
-            </div>
-            <div className="card-body">
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item"><b>Nome:</b> {filial.nome}</li>
-                <li className="list-group-item"><b>Rua:</b> {filial.rua}</li>
-                <li className="list-group-item"><b>Número:</b> {filial.numero}</li>
-                <li className="list-group-item"><b>Cidade:</b> {filial.cidade}</li>
-                <li className="list-group-item"><b>Estado:</b> {filial.estado}</li>
-                <li className="list-group-item"><b>Telefone:</b> {filial.telefone}</li>
-              </ul>
-            </div>
+      <h2 className="my-4">Detalhes da Filial</h2>
+      {filial ? (
+        <div className="card">
+          <div className="card-header">
+            Detalhes da Filial: {filial.codigoFilial} {/* Exibindo o código da filial */}
           </div>
-
-          <div className="text-center">
-            <Link className="btn btn-outline-primary mt-3" to="/listfilial">Voltar</Link>
+          <div className="card-body">
+            <ul className="list-group list-group-flush">
+              <li className="list-group-item"><strong>Nome:</strong> {filial.nome}</li>
+              <li className="list-group-item"><strong>Rua:</strong> {filial.rua}</li>
+              <li className="list-group-item"><strong>Número:</strong> {filial.numero}</li>
+              <li className="list-group-item"><strong>Cidade:</strong> {filial.cidade}</li>
+              <li className="list-group-item"><strong>Estado:</strong> {filial.estado}</li>
+              <li className="list-group-item"><strong>Telefone:</strong> {filial.telefone}</li>
+              <li className="list-group-item"><strong>Código da Filial:</strong> {filial.codigoFilial}</li>
+              <li className="list-group-item"><strong>CNPJ:</strong> {filial.cnpj}</li>
+            </ul>
           </div>
         </div>
+      ) : (
+        <div>Filial não encontrada</div>
+      )}
+      <div className="text-center mt-3">
+        <Link to="/listfilial" className="btn btn-outline-primary">Voltar</Link>
       </div>
     </div>
   );

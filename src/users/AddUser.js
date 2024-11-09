@@ -8,54 +8,54 @@ export default function AddUser() {
     const [city, setCity] = useState('');
     const [rg, setRg] = useState('');
     const [street, setStreet] = useState('');
-    const [error, setError] = useState(''); // Para armazenar mensagens de erro
+    const [error, setError] = useState(''); 
 
-  // AddUser.js
+   
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
+   
+        const rgExists = await checkRgExists(rg);
+        if (rgExists) {
+            setError("RG já cadastrado!");
+            return;
+        }
 
-    // Checa se o RG já existe
-    const rgExists = await checkRgExists(rg);
-    if (rgExists) {
-        setError("RG já cadastrado!");
-        return;
-    }
+        const newUser = {
+            name,
+            email,
+            neighborhood,
+            city,
+            rg,
+            street,
+        };
 
-    const newUser = {
-        name,
-        email,
-        neighborhood,
-        city,
-        rg,
-        street,
+        try {
+         
+            await axios.post('http://localhost:8080/api/users', newUser);
+            alert('User added successfully!');
+            setError(''); 
+        } catch (error) {
+         
+            if (error.response) {
+              
+                setError(error.response.data.message || 'Erro ao adicionar o usuário!');
+            } else if (error.request) {
+                setError('Erro na conexão com o servidor!');
+            } else {
+                setError('Erro desconhecido!');
+            }
+        }
     };
 
-    try {
-        await axios.post('http://localhost:8080/user', newUser);
-        alert('User added successfully!');
-        setError(''); // Limpa a mensagem de erro
-    } catch (error) {
-        // Exibe o erro retornado do backend, como RG já cadastrado
-        if (error.response && error.response.status === 400) {
-            setError(error.response.data.message);
-        } else {
-            console.error(error);
-            alert('Error adding user!');
+    const checkRgExists = async (rg) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/users/rg/${rg}`);
+            return response.data; 
+        } catch (error) {
+            return false; 
         }
-    }
-};
-
-// Função para verificar se o RG já existe
-const checkRgExists = async (rg) => {
-    try {
-        const response = await axios.get(`http://localhost:8080/user/rg/${rg}`);
-        return response.data; // Retorna true ou false com base na existência do RG
-    } catch (error) {
-        return false; // Se erro, o RG não existe
-    }
-};
-
+    };
 
     return (
         <div>

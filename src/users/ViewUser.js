@@ -19,7 +19,7 @@ export default function ViewUser() {
   }, []);
 
   const loadUser = async () => {
-    const result = await axios.get(`http://localhost:8080/user/${id}`);
+    const result = await axios.get(`http://localhost:8080/api/users/${id}`); 
     setUser(result.data);
   };
 
@@ -31,33 +31,28 @@ export default function ViewUser() {
 
           <div className="card">
             <div className="card-header">
-              Details of user id:
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item">
-                  <b>Nome:</b> {user.name}
-                </li>
-
-                <li className="list-group-item">
-                  <b>Email:</b> {user.email}
-                </li>
-
-                <li className="list-group-item">
-                  <b>Bairro:</b> {user.neighborhood}
-                </li>
-
-                <li className="list-group-item">
-                  <b>Cidade:</b> {user.city}
-                </li>
-
-                <li className="list-group-item">
-                  <b>RG:</b> {user.rg}
-                </li>
-
-                <li className="list-group-item">
-                  <b>Rua:</b> {user.street}
-                </li>
-              </ul>
+              <strong>Details of user id: {id}</strong>
             </div>
+            <ul className="list-group list-group-flush">
+              <li className="list-group-item">
+                <b>Name:</b> {user.name}
+              </li>
+              <li className="list-group-item">
+                <b>Email:</b> {user.email}
+              </li>
+              <li className="list-group-item">
+                <b>Neighborhood:</b> {user.neighborhood}
+              </li>
+              <li className="list-group-item">
+                <b>City:</b> {user.city}
+              </li>
+              <li className="list-group-item">
+                <b>RG:</b> {user.rg}
+              </li>
+              <li className="list-group-item">
+                <b>Street:</b> {user.street}
+              </li>
+            </ul>
           </div>
 
           <Link className="btn btn-primary my-2" to={"/"}>Back to Home</Link>
