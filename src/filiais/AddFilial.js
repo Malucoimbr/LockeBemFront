@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 export default function AddFilial() {
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
-    const [codigoFilial, setCodigoFilial] = useState('');
     const [nome, setNome] = useState('');
     const [numero, setNumero] = useState('');
     const [rua, setRua] = useState('');
@@ -17,16 +16,9 @@ export default function AddFilial() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const filialCodeExists = await checkFilialCodeExists(codigoFilial);
-        if (filialCodeExists) {
-            setError("Código da filial já cadastrado!");
-            return;
-        }
-
         const newFilial = {
             cidade,
             estado,
-            codigoFilial,
             nome,
             numero,
             rua,
@@ -35,11 +27,10 @@ export default function AddFilial() {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/api/filiais', newFilial);
+            const response = await axios.post('http://localhost:8080/api/filial', newFilial);
             
             setCidade('');
             setEstado('');
-            setCodigoFilial('');
             setNome('');
             setNumero('');
             setRua('');
@@ -65,10 +56,10 @@ export default function AddFilial() {
     };
 
 
-    const checkFilialCodeExists = async (codigoFilial) => {
+    const checkFilialCodeExists = async (codigo) => {
         try {
           
-            const response = await axios.get(`http://localhost:8080/api/filiais/codigo/${codigoFilial}`);
+            const response = await axios.get(`http://localhost:8080/api/filial/codigo/${codigo}`);
             return response.data; 
         } catch (error) {
             console.error("Erro ao verificar o código da filial:", error);
@@ -82,17 +73,8 @@ export default function AddFilial() {
         <div>
             <h2>Adicionar Filial</h2>
             <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="codigoFilial" className="form-label">Código da Filial</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="codigoFilial"
-                        value={codigoFilial}
-                        onChange={(e) => setCodigoFilial(e.target.value)}
-                        required
-                    />
-                </div>
+             
+                   
                 <div className="mb-3">
                     <label htmlFor="nome" className="form-label">Nome</label>
                     <input

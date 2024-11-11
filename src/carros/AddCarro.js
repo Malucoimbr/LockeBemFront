@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function AddCar() {
+export default function AddCarro() {
     const [placa, setPlaca] = useState('');
     const [modelo, setModelo] = useState('');
-    const [anoFab, setAnoFab] = useState('');
+    const [ano_fab, setAnoFab] = useState('');
     const [km, setKm] = useState('');
-    const [tipoCarro, setTipoCarro] = useState('');
-    const [codigoFilial, setCodigoFilial] = useState('');
+    const [tipo_carro, setTipoCarro] = useState('');
+    const [Filial_codigo, setCodigoFilial] = useState('');
     const [error, setError] = useState(''); 
 
     const handleSubmit = async (e) => {
@@ -15,14 +15,14 @@ export default function AddCar() {
         const newCar = {
             placa,
             modelo,
-            anoFab,
+            ano_fab,
             km,
-            tipoCarro,
-            codigoFilial
+            tipo_carro,
+            Filial_codigo
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/api/carros', newCar);
+            const response = await axios.post('http://localhost:8080/api/carro', newCar);
             alert('Carro adicionado com sucesso!');
         } catch (error) {
             console.error("Erro completo:", error);
@@ -57,12 +57,12 @@ export default function AddCar() {
                     />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="anoFab" className="form-label">Ano de Fabricação</label>
+                    <label htmlFor="ano_fab" className="form-label">Ano de Fabricação</label>
                     <input
                         type="number"
                         className="form-control"
-                        id="anoFab"
-                        value={anoFab}
+                        id="ano_fab"
+                        value={ano_fab}
                         onChange={(e) => setAnoFab(e.target.value)}
                         required
                     />
@@ -79,23 +79,23 @@ export default function AddCar() {
                     />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="tipoCarro" className="form-label">Tipo de Carro</label>
+                    <label htmlFor="tipo_carro" className="form-label">Tipo de Carro</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="tipoCarro"
-                        value={tipoCarro}
+                        id="tipo_carro"
+                        value={tipo_carro}
                         onChange={(e) => setTipoCarro(e.target.value)}
                         required
                     />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="codigoFilial" className="form-label">Código da Filial</label>
+                    <label htmlFor="filial_codigo" className="form-label">Código da Filial</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="codigoFilial"
-                        value={codigoFilial}
+                        id="filial_codigo"
+                        value={Filial_codigo}
                         onChange={(e) => setCodigoFilial(e.target.value)}
                         required
                     />

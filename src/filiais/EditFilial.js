@@ -23,7 +23,7 @@ export default function EditFilial() {
 
   const loadFilial = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/api/filiais/${codigoFilial}`);
+      const result = await axios.get(`http://localhost:8080/api/filial/${codigoFilial}`);
       setFilial(result.data);
     } catch (error) {
       console.error('Erro ao carregar os dados da filial.', error);
@@ -37,7 +37,7 @@ export default function EditFilial() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8080/api/filiais/codigo/${codigoFilial}`, filial);
+      await axios.put(`http://localhost:8080/api/filial/codigo/${codigoFilial}`, filial);
       navigate("/listfilial");
     } catch (error) {
       console.error('Erro ao atualizar a filial!', error);

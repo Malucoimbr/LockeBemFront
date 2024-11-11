@@ -13,7 +13,7 @@ export default function Home() {
           <h3>Clientes</h3>
           <p>Gerencie os clientes no sistema.</p>
           <div className="d-grid gap-2">
-            <Link to="/users" className="btn btn-primary">Gerenciar Clientes</Link>
+            <Link to="/clientes" className="btn btn-primary">Gerenciar Clientes</Link>
           </div>
         </div>
 
@@ -22,7 +22,7 @@ export default function Home() {
           <h3>Carros</h3>
           <p>Gerencie os carros no sistema.</p>
           <div className="d-grid gap-2">
-            <Link to="/cars" className="btn btn-primary">Gerenciar Carros</Link>
+            <Link to="/carros" className="btn btn-primary">Gerenciar Carros</Link>
           </div>
         </div>
 

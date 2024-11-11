@@ -13,7 +13,7 @@ export default function ListFilial() {
 
   const loadFiliais = async () => {
     try {
-      const result = await axios.get("http://localhost:8080/api/filiais");
+      const result = await axios.get("http://localhost:8080/api/filial");
       setFiliais(result.data);
       setLoading(false);
     } catch (error) {
@@ -24,7 +24,7 @@ export default function ListFilial() {
 
   const deleteFilial = async (codigoFilial) => {
     try {
-      await axios.delete(`http://localhost:8080/api/filiais/${codigoFilial}`);
+      await axios.delete(`http://localhost:8080/api/filial/${codigoFilial}`);
       setFiliais(filiais.filter(filial => filial.codigoFilial !== codigoFilial));
     } catch (error) {
       console.error('Erro ao deletar a filial.', error);

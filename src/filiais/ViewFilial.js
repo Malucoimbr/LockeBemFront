@@ -25,7 +25,7 @@ export default function ViewFilial() {
   // Função para carregar a filial com o id
   const loadFilial = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/api/filiais/${codigoFilial}`);
+      const result = await axios.get(`http://localhost:8080/api/filial/${codigoFilial}`);
       setFilial(result.data);
       setLoading(false);
     } catch (error) {

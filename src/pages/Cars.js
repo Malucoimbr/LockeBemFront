@@ -14,7 +14,7 @@ export default function Cars() {
               <FaCar size={40} className="mb-3" />
               <h4>Adicionar Carro</h4>
               <p>Cadastre um novo carro no sistema.</p>
-              <Link to="/addcar" className="btn btn-success btn-lg w-100">Adicionar Carro</Link>
+              <Link to="/addcarro" className="btn btn-success btn-lg w-100">Adicionar Carro</Link>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@ export default function Cars() {
               <FaListAlt size={40} className="mb-3" />
               <h4>Listar Carros</h4>
               <p>Veja todos os carros cadastrados no sistema.</p>
-              <Link to="/listcars" className="btn btn-info btn-lg w-100">Listar Carros</Link>
+              <Link to="/listcarro" className="btn btn-info btn-lg w-100">Listar Carros</Link>
             </div>
           </div>
         </div>
