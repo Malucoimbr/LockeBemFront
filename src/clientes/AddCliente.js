@@ -25,41 +25,30 @@ export default function AdicionarCliente() {
     const [telefone, setTelefone] = useState('');
     const [erro, setErro] = useState('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        const novoCliente = {
-            rg,
-            nome,
-            email,
-            telefone,
-            rua,
-            bairro,
-          
-            numero
-        };
-    
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        
+        const novoCliente = { nome, email, bairro, rg, rua, numero, telefone };
+
         try {
+            console.log('Enviando novo cliente:', novoCliente);
             const resposta = await axios.post('http://localhost:8080/api/cliente', novoCliente);
             alert('Cliente adicionado com sucesso!');
             setErro('');
             setNome('');
             setEmail('');
             setBairro('');
-        
             setRg('');
             setRua('');
+            setNumero('');
             setTelefone('');
         } catch (error) {
             console.error("Erro ao adicionar o cliente:", error);
-            if (error.response) {
-                setErro(error.response.data || 'Erro ao adicionar o cliente!');
-            } else {
-                setErro('Erro desconhecido!');
-            }
+
+            const mensagemErro = error.response?.data?.error || 'Erro ao adicionar o cliente!';
+            setErro(mensagemErro);
         }
     };
-    
 
     return (
         <div className="container mt-5">
@@ -93,7 +82,6 @@ export default function AdicionarCliente() {
                 </div>
 
                 <div className="row">
-                
                     <div className="col-md-6">
                         <FormInput id="numero" label="Numero" value={numero} onChange={(e) => setNumero(e.target.value)} required />
                     </div>

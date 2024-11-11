@@ -17,7 +17,7 @@ export default function EditCliente() {
 
   const [loading, setLoading] = useState(true); 
 
-  const { rg } = useParams(); 
+  const { id } = useParams(); 
 
   
   const onInputChange = (e) => {
@@ -35,26 +35,21 @@ export default function EditCliente() {
     });
   
     try {
-      await axios.put(`http://localhost:8080/api/cliente/${rg}`, updatedData);
+      await axios.put(`http://localhost:8080/api/cliente/${id}`, updatedData);
       navigate("/listcliente");
     } catch (error) {
       console.error("Erro ao atualizar cliente:", error.response ? error.response.data : error);
     }
   };
   
-  
-  
-  
-
-  // Carregar os dados do cliente assim que o componente é montado ou o rg mudar
   useEffect(() => {
     loadCliente();
-  }, [rg]);
+  }, [id]);
 
   const loadCliente = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/api/cliente/${rg}`);
-      console.log(result.data);  // Verifique os dados recebidos
+      const result = await axios.get(`http://localhost:8080/api/cliente/${id}`);
+      console.log(result.data);  
       setCliente(result.data);
       setLoading(false);
     } catch (error) {
@@ -64,7 +59,6 @@ export default function EditCliente() {
   };
   
 
-  // Exibir mensagem de carregamento enquanto os dados não estão prontos
   if (loading) {
     return <div>Loading...</div>;
   }

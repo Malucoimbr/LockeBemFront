@@ -23,9 +23,9 @@ export default function ListCliente() {
   };
 
   // Função para excluir um cliente pelo rg
-  const deleteCliente = async (rg) => {
+  const deleteCliente = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/api/cliente/${rg}`);  // Usando rg como identificador
+      await axios.delete(`http://localhost:8080/api/cliente/${id}`);  // Usando rg como identificador
       loadClientes();  // Recarregar a lista após a exclusão
     } catch (err) {
       setError('Erro ao excluir cliente');
@@ -60,9 +60,9 @@ export default function ListCliente() {
               <td>{cliente.bairro}</td>
               <td>{cliente.numero}</td>
               <td>
-                <Link className="btn btn-primary mx-2" to={`/viewcliente/${cliente.rg}`}>Ver</Link>
-                <Link className="btn btn-outline-primary mx-2" to={`/editcliente/${cliente.rg}`}>Editar</Link>
-                <button className="btn btn-danger mx-2" onClick={() => deleteCliente(cliente.rg)}>Excluir</button>
+                <Link className="btn btn-primary mx-2" to={`/viewcliente/${cliente.id}`}>Ver</Link>
+                <Link className="btn btn-outline-primary mx-2" to={`/editcliente/${cliente.id}`}>Editar</Link>
+                <button className="btn btn-danger mx-2" onClick={() => deleteCliente(cliente.id)}>Excluir</button>
               </td>
             </tr>
           ))}

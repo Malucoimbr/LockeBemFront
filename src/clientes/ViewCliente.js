@@ -15,16 +15,16 @@ export default function ViewCliente() {
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState('');
   
-  const { rg } = useParams(); 
+  const { id } = useParams(); 
   const navigate = useNavigate(); // For redirecting in case of error
 
   useEffect(() => {
     loadCliente();
-  }, [rg]);
+  }, [id]);
 
   const loadCliente = async () => {
     try {
-      const result = await axios.get(`http://localhost:8080/${rg}`);
+      const result = await axios.get(`http://localhost:8080/api/cliente/${id}`);
       setCliente(result.data); // Atualiza o estado com os dados do cliente
     } catch (error) {
       console.error("Erro ao carregar cliente:", error);
