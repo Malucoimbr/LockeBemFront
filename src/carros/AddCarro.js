@@ -9,7 +9,7 @@ export default function AddCarro() {
     const [km, setKm] = useState('');
     const [carroTipo, setCarroTipo] = useState('');
     const [filialId, setFilialId] = useState('');
-    const [valor_diaria, setValorDiaria] = useState('');  // Novo estado para valor_diaria
+    const [valorDiaria, setValorDiaria] = useState('');  // Novo estado para valor_diaria
     const [erro, setErro] = useState(''); 
 
     const handleSubmit = async (e) => {
