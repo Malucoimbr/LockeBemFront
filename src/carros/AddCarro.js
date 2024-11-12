@@ -9,6 +9,7 @@ export default function AddCarro() {
     const [km, setKm] = useState('');
     const [carroTipo, setCarroTipo] = useState('');
     const [filialId, setFilialId] = useState('');
+    const [valor_diaria, setValorDiaria] = useState('');  // Novo estado para valor_diaria
     const [erro, setErro] = useState(''); 
 
     const handleSubmit = async (e) => {
@@ -19,7 +20,8 @@ export default function AddCarro() {
             ano_fab,
             km,
             carroTipo,
-            filialId
+            filialId,
+            valorDiaria  // Incluindo valor_diaria no objeto
         };
 
         try {
@@ -32,6 +34,7 @@ export default function AddCarro() {
             setKm('');
             setCarroTipo('');
             setFilialId('');
+            setValorDiaria('');  // Limpando o campo de valor_diaria
         } catch (error) {
             console.error("Erro completo:", error);
             setErro(error.response?.data?.message || 'Erro ao adicionar carro!');
@@ -66,6 +69,19 @@ export default function AddCarro() {
                     </div>
                     <div className="col-md-6">
                         <FormInput id="filial_codigo" label="Código da Filial" value={filialId} onChange={(e) => setFilialId(e.target.value)} required />
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-md-6">
+                        <FormInput 
+                            id="valor_diaria" 
+                            label="Valor da Diária" 
+                            type="number" 
+                            value={valorDiaria} 
+                            onChange={(e) => setValorDiaria(e.target.value)} 
+                            required 
+                        />
                     </div>
                 </div>
 

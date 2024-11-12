@@ -56,6 +56,7 @@ export default function ViewCar() {
               <li className="list-group-item"><strong>Quilometragem:</strong> {carro.km}</li>
               <li className="list-group-item"><strong>Tipo de Carro:</strong> {carro.carroTipo}</li>
               <li className="list-group-item"><strong>Código da Filial:</strong> {carro.filialId}</li>
+              <li className="list-group-item"><strong>Valor da Diária:</strong> {carro.valorDiaria}</li>
             </ul>
           </div>
         </div>

@@ -12,7 +12,8 @@ export default function EditCar() {
         ano_fab: '',
         km: '',
         tipo_carro: '',
-        Filial_id: ''
+        Filial_id: '',
+        valor_diaria: '',
     });
 
     const [loading, setLoading] = useState(true);
@@ -46,6 +47,7 @@ export default function EditCar() {
         if (!carro.km) errors.km = 'Quilometragem é obrigatória.';
         if (!carro.carroTipo) errors.tipo_carro = 'Tipo de carro é obrigatório.';
         if (!carro.filialId) errors.codigoFilial = 'Código da filial é obrigatório.';
+        if (!carro.valorDiaria) errors.valorDiaria = 'O valor da diária é obrigatório.';
         setValidationErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -154,6 +156,20 @@ export default function EditCar() {
                     />
                     {validationErrors.codigoFilial && <div className="invalid-feedback">{validationErrors.codigoFilial}</div>}
                 </div>
+
+                <div className="mb-3">
+                    <label htmlFor="codigoFilial" className="form-label">Valor da diária</label>
+                    <input
+                        type="text"
+                        className={`form-control ${validationErrors.codigoFilial ? 'is-invalid' : ''}`}
+                        id="valorDiaria"
+                        name="valorDiaria"
+                        value={carro.valorDiaria}
+                        onChange={handleChange}
+                    />
+                    {validationErrors.codigoFilial && <div className="invalid-feedback">{validationErrors.codigoFilial}</div>}
+                </div>
+
                 <button 
                     type="submit" 
                     className="btn btn-primary"

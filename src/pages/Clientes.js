@@ -5,7 +5,7 @@ import { FaUserPlus, FaListAlt } from 'react-icons/fa';
 export default function Clientes() {
   return (
     <div className="container min-vh-100 d-flex flex-column">
-      <h1 className="text-center my-4">Gestão de Usuários</h1>
+      <h1 className="text-center my-4">Gestão de Clientes</h1>
       
       <div className="row justify-content-center">
         <div className="col-md-4 mb-4">
@@ -14,7 +14,7 @@ export default function Clientes() {
               <FaUserPlus size={40} className="mb-3" />
               <h4>Adicionar Usuário</h4>
               <p>Adicione um novo usuário ao sistema.</p>
-              <Link to="/addcliente" className="btn btn-success btn-lg w-100">Adicionar Usuário</Link>
+              <Link to="/addcliente" className="btn btn-success btn-lg w-100">Adicionar Clientes</Link>
             </div>
           </div>
         </div>

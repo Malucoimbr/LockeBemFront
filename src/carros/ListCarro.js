@@ -44,6 +44,7 @@ export default function ListCars() {
               <th>Quilometragem</th>
               <th>Tipo de Carro</th>
               <th>Código da Filial</th>
+              <th>Valor da diária</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -56,6 +57,7 @@ export default function ListCars() {
                 <td>{carro.km}</td>
                 <td>{carro.carroTipo}</td>
                 <td>{carro.filialId}</td>
+                <td>{carro.valorDiaria}</td>
                 <td>
                   <Link to={`/viewcarros/${carro.id}`} className="btn btn-info">Ver</Link>
                   <Link to={`/editcarros/${carro.id}`} className="btn btn-outline-primary mx-2">Editar</Link>

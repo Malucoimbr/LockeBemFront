@@ -61,12 +61,12 @@ function App() {
           <Route exact path="/filiais" element={<Filiais />} />
 
           {/* {contratos} */}
-          <Route exact path="/addcontrato" element={<AddContratoAluguel />} />
+          {/* <Route exact path="/addcontrato" element={<AddContratoAluguel />} /> */}
           {/* <Route exact path="/listcontrato" element={<ListContratoAluguel/>} />      
           <Route exact path="/editcontrato/:id" element={<EditContratoAluguel />} />
           <Route exact path="/viewcontrato/:id" element={<ViewContratoAluguel />} /> */}
-          <Route exact path="/contrato" element={<Contratos />} />
-          
+          {/* <Route exact path="/contrato" element={<Contratos />} />
+           */}
 
         </Routes>
       </Router>

@@ -76,7 +76,7 @@ export default function AdicionarCliente() {
                 </div>
 
                 {erro && <div className="alert alert-danger mt-3">{erro}</div>}
-                <Link type="submit" className="btn btn-primary btn-lg mt-3" to={"/clientes"}>Adicionar Cliente</Link>
+                <button type="submit" className="btn btn-primary btn-lg mt-3">Adicionar Cliente</button>
             </form>
         </div>
     );
