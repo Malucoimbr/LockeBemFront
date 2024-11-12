@@ -37,7 +37,7 @@ export default function EditFilial() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8080/api/filial/codigo/${codigoFilial}`, filial);
+      await axios.put(`http://localhost:8080/api/filial/${codigoFilial}`, filial);
       navigate("/listfilial");
     } catch (error) {
       console.error('Erro ao atualizar a filial!', error);
@@ -58,9 +58,9 @@ export default function EditFilial() {
                 type="text"
                 className="form-control"
                 name="codigoFilial"
-                value={filial.codigoFilial}
+                value={filial.id}
                 onChange={onInputChange}
-                readOnly  // Agora o campo 'codigoFilial' é apenas leitura
+                readOnly  
               />
             </div>
             <div className="mb-3">

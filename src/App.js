@@ -26,6 +26,10 @@ import EditCarro from './carros/EditCarro';
 import ViewCarro from './carros/ViewCarro'
 import ListCarro from './carros/ListCarro';
 import AddCarro from './carros/AddCarro';
+import AddContratoAluguel from './contratos_aluguel/AddContrato';
+
+//
+import Contratos from './pages/Contratos';
 
 function App() {
   return (
@@ -56,8 +60,12 @@ function App() {
           <Route exact path="/viewfilial/:codigoFilial" element={<ViewFilial />} />
           <Route exact path="/filiais" element={<Filiais />} />
 
-
-   
+          {/* {contratos} */}
+          <Route exact path="/addcontrato" element={<AddContratoAluguel />} />
+          {/* <Route exact path="/listcontrato" element={<ListContratoAluguel/>} />      
+          <Route exact path="/editcontrato/:id" element={<EditContratoAluguel />} />
+          <Route exact path="/viewcontrato/:id" element={<ViewContratoAluguel />} /> */}
+          <Route exact path="/contrato" element={<Contratos />} />
           
 
         </Routes>

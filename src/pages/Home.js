@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaUsers, FaCar, FaBuilding } from 'react-icons/fa';
+import { FaUsers, FaCar, FaBuilding, FaFileAlt } from 'react-icons/fa';
 
 export default function Home() {
   return (
@@ -34,6 +34,16 @@ export default function Home() {
             <Link to="/filiais" className="btn btn-primary">Gerenciar Filiais</Link>
           </div>
         </div>
+
+        <div className="col-md-4 text-center mb-4">
+          <FaFileAlt size={50} />
+          <h3>Contratos</h3>
+          <p>Gerencie os contratos no sistema.</p>
+          <div className="d-grid gap-2">
+            <Link to="/contrato" className="btn btn-primary">Gerenciar Contratos</Link>
+          </div>
+        </div>
+
       </div>
     </div>
   );

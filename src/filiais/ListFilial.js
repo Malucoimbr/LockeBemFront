@@ -25,11 +25,13 @@ export default function ListFilial() {
   const deleteFilial = async (codigoFilial) => {
     try {
       await axios.delete(`http://localhost:8080/api/filial/${codigoFilial}`);
-      setFiliais(filiais.filter(filial => filial.codigoFilial !== codigoFilial));
+      loadFiliais(); 
     } catch (error) {
       console.error('Erro ao deletar a filial.', error);
     }
   };
+
+
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -58,8 +60,8 @@ export default function ListFilial() {
         </thead>
         <tbody>
           {filiais.map(filial => (
-            <tr key={filial.codigoFilial}>
-              <td>{filial.codigoFilial}</td>
+            <tr key={filial.id}>
+              <td>{filial.id}</td>
               <td>{filial.nome}</td>
               <td>{filial.rua}</td>
               <td>{filial.numero}</td>
@@ -68,9 +70,9 @@ export default function ListFilial() {
               <td>{filial.telefone}</td>
               <td>{filial.cnpj}</td>
               <td>
-                <Link to={`/viewfilial/${filial.codigoFilial}`} className="btn btn-info">Ver</Link>
-                <Link to={`/editfilial/${filial.codigoFilial}`} className="btn btn-outline-primary mx-2">Editar</Link>
-                <button onClick={() => deleteFilial(filial.codigoFilial)} className="btn btn-danger mx-2">Deletar</button>
+                <Link to={`/viewfilial/${filial.id}`} className="btn btn-info">Ver</Link>
+                <Link to={`/editfilial/${filial.id}`} className="btn btn-outline-primary mx-2">Editar</Link>
+                <button onClick={() => deleteFilial(filial.id)} className="btn btn-danger mx-2">Deletar</button>
               </td>
             </tr>
           ))}

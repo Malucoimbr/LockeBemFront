@@ -55,18 +55,6 @@ export default function AddFilial() {
         }
     };
 
-
-    const checkFilialCodeExists = async (codigo) => {
-        try {
-          
-            const response = await axios.get(`http://localhost:8080/api/filial/codigo/${codigo}`);
-            return response.data; 
-        } catch (error) {
-            console.error("Erro ao verificar o código da filial:", error);
-            return false; 
-        }
-    };
-
     console.log(cnpj); 
 
     return (

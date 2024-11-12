@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import FormInput from '../components/FormInput'; 
 
 export default function AdicionarCliente() {
@@ -75,7 +76,7 @@ export default function AdicionarCliente() {
                 </div>
 
                 {erro && <div className="alert alert-danger mt-3">{erro}</div>}
-                <button type="submit" className="btn btn-primary btn-lg mt-3">Adicionar Cliente</button>
+                <Link type="submit" className="btn btn-primary btn-lg mt-3" to={"/clientes"}>Adicionar Cliente</Link>
             </form>
         </div>
     );

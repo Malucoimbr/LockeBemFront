@@ -11,7 +11,6 @@ export default function ViewFilial() {
     cidade: '',
     estado: '',
     telefone: '',
-    codigoFilial: '',
     cnpj: ''
   });
 
@@ -48,11 +47,11 @@ export default function ViewFilial() {
       {filial ? (
         <div className="card">
           <div className="card-header">
-            Detalhes da Filial: {filial.codigoFilial} {/* Exibindo o código da filial */}
+            Detalhes da Filial: {filial.id} 
           </div>
           <div className="card-body">
             <ul className="list-group list-group-flush">
-            <li className="list-group-item"><strong>Código da Filial:</strong> {filial.codigoFilial}</li>
+            <li className="list-group-item"><strong>Código da Filial:</strong> {filial.id}</li>
               <li className="list-group-item"><strong>Nome:</strong> {filial.nome}</li>
               <li className="list-group-item"><strong>Rua:</strong> {filial.rua}</li>
               <li className="list-group-item"><strong>Número:</strong> {filial.numero}</li>
