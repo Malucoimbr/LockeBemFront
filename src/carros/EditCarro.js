@@ -6,13 +6,13 @@ export default function EditCar() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [car, setCar] = useState({
+    const [carro, setCarro] = useState({
         placa: '',
         modelo: '',
         ano_fab: '',
         km: '',
         tipo_carro: '',
-        codigoFilial: ''
+        Filial_id: ''
     });
 
     const [loading, setLoading] = useState(true);
@@ -21,9 +21,9 @@ export default function EditCar() {
     const [validationErrors, setValidationErrors] = useState({});
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/carros/${id}`)
+        axios.get(`http://localhost:8080/api/carro/${id}`)
             .then(response => {
-                setCar(response.data);
+                setCarro(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -35,17 +35,17 @@ export default function EditCar() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setCar({ ...car, [name]: value });
+        setCarro({ ...carro, [name]: value });
     };
 
     const validateForm = () => {
         let errors = {};
-        if (!car.placa) errors.placa = 'Placa é obrigatória.';
-        if (!car.modelo) errors.modelo = 'Modelo é obrigatório.';
-        if (!car.ano_fab) errors.ano_fab = 'Ano de fabricação é obrigatório.';
-        if (!car.km) errors.km = 'Quilometragem é obrigatória.';
-        if (!car.tipo_carro) errors.tipo_carro = 'Tipo de carro é obrigatório.';
-        if (!car.codigoFilial) errors.codigoFilial = 'Código da filial é obrigatório.';
+        if (!carro.placa) errors.placa = 'Placa é obrigatória.';
+        if (!carro.modelo) errors.modelo = 'Modelo é obrigatório.';
+        if (!carro.ano_fab) errors.ano_fab = 'Ano de fabricação é obrigatório.';
+        if (!carro.km) errors.km = 'Quilometragem é obrigatória.';
+        if (!carro.carroTipo) errors.tipo_carro = 'Tipo de carro é obrigatório.';
+        if (!carro.filialId) errors.codigoFilial = 'Código da filial é obrigatório.';
         setValidationErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -63,7 +63,7 @@ export default function EditCar() {
         }
 
         try {
-            await axios.put(`http://localhost:8080/api/carros/${id}`, car);
+            await axios.put(`http://localhost:8080/api/carro/${id}`, carro);
             alert('Carro atualizado com sucesso!');
             navigate('/listcars');
         } catch (error) {
@@ -89,7 +89,7 @@ export default function EditCar() {
                         className={`form-control ${validationErrors.placa ? 'is-invalid' : ''}`}
                         id="placa"
                         name="placa"
-                        value={car.placa}
+                        value={carro.placa}
                         onChange={handleChange}
                     />
                     {validationErrors.placa && <div className="invalid-feedback">{validationErrors.placa}</div>}
@@ -101,7 +101,7 @@ export default function EditCar() {
                         className={`form-control ${validationErrors.modelo ? 'is-invalid' : ''}`}
                         id="modelo"
                         name="modelo"
-                        value={car.modelo}
+                        value={carro.modelo}
                         onChange={handleChange}
                     />
                     {validationErrors.modelo && <div className="invalid-feedback">{validationErrors.modelo}</div>}
@@ -113,7 +113,7 @@ export default function EditCar() {
                         className={`form-control ${validationErrors.ano_fab ? 'is-invalid' : ''}`}
                         id="ano_fab"
                         name="ano_fab"
-                        value={car.anoFab}
+                        value={carro.ano_fab}
                         onChange={handleChange}
                     />
                     {validationErrors.ano_fab && <div className="invalid-feedback">{validationErrors.ano_fab}</div>}
@@ -125,7 +125,7 @@ export default function EditCar() {
                         className={`form-control ${validationErrors.km ? 'is-invalid' : ''}`}
                         id="km"
                         name="km"
-                        value={car.km}
+                        value={carro.km}
                         onChange={handleChange}
                     />
                     {validationErrors.km && <div className="invalid-feedback">{validationErrors.km}</div>}
@@ -137,7 +137,7 @@ export default function EditCar() {
                         className={`form-control ${validationErrors.tipo_carro ? 'is-invalid' : ''}`}
                         id="tipo_carro"
                         name="tipo_carro"
-                        value={car.tipoCarro}
+                        value={carro.carroTipo}
                         onChange={handleChange}
                     />
                     {validationErrors.tipo_carro && <div className="invalid-feedback">{validationErrors.tipo_carro}</div>}
@@ -149,7 +149,7 @@ export default function EditCar() {
                         className={`form-control ${validationErrors.codigoFilial ? 'is-invalid' : ''}`}
                         id="codigoFilial"
                         name="codigoFilial"
-                        value={car.codigoFilial}
+                        value={carro.filialId}
                         onChange={handleChange}
                     />
                     {validationErrors.codigoFilial && <div className="invalid-feedback">{validationErrors.codigoFilial}</div>}

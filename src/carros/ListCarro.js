@@ -12,7 +12,8 @@ export default function ListCars() {
   
     const loadCarros = async () => {
       try {
-        const result = await axios.get("http://localhost:8080/api/carros"); 
+        const result = await axios.get("http://localhost:8080/api/carro"); 
+      console.log(result.data);
         setCarros(result.data);
       } catch (err) {
         setError('Erro ao carregar carros');
@@ -22,47 +23,48 @@ export default function ListCars() {
     
     const deleteCarros = async (id) => {
       try {
-        await axios.delete(`http://localhost:8080/api/carros/${id}`);  // Aqui foi corrigido para usar car.id
+        await axios.delete(`http://localhost:8080/api/carro/${id}`);  // Aqui foi corrigido para usar car.id
         loadCarros();
       } catch (err) {
         setError('Erro ao excluir carro');
         console.error(err);
       }
     };
-
     return (
-        <div>
-            <h2>Lista de Carros</h2>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>Placa</th>
-                        <th>Modelo</th>
-                        <th>Ano de Fabricação</th>
-                        <th>Quilometragem</th>
-                        <th>Tipo de Carro</th>
-                        <th>Código da Filial</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {carros.map(car => (
-                        <tr key={car.id}>
-                            <td>{car.placa}</td>
-                            <td>{car.modelo}</td>
-                            <td>{car.anoFab}</td>
-                            <td>{car.km}</td>
-                            <td>{car.tipoCarro}</td>
-                            <td>{car.codigoFilial}</td>
-                            <td>
-                                <Link to={`/viewcarros/${car.id}`} className="btn btn-info">Ver</Link>
-                                <Link to={`/editcarros/${car.id}`} className="btn btn-outline-primary mx-2">Editar</Link>
-                                <button onClick={() => deleteCarros(car.id)} className="btn btn-danger mx-2">Deletar</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+      <div className="container">
+        <div className="py-4"></div>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <h2>Lista de Carros</h2>
+        <table className="table border shadow">
+          <thead>
+            <tr>
+              <th>Placa</th>
+              <th>Modelo</th>
+              <th>Ano de Fabricação</th>
+              <th>Quilometragem</th>
+              <th>Tipo de Carro</th>
+              <th>Código da Filial</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {carros.map(carro => (
+              <tr key={carro.id}>
+                <td>{carro.placa}</td>
+                <td>{carro.modelo}</td>
+                <td>{carro.ano_fab}</td>
+                <td>{carro.km}</td>
+                <td>{carro.carroTipo}</td>
+                <td>{carro.filialId}</td>
+                <td>
+                  <Link to={`/viewcarros/${carro.id}`} className="btn btn-info">Ver</Link>
+                  <Link to={`/editcarros/${carro.id}`} className="btn btn-outline-primary mx-2">Editar</Link>
+                  <button onClick={() => deleteCarros(carro.id)} className="btn btn-danger mx-2">Deletar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
-}
+  }

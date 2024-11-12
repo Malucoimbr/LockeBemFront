@@ -45,8 +45,8 @@ function App() {
           {/* carros */}
           <Route exact path="/carros" element={<Cars />} />
           <Route exact path="/addcarro" element={<AddCarro />} />
-          <Route exact path="/editcarro/:id" element={<EditCarro />} />
-          <Route exact path="/viewcarro/:id" element={<ViewCarro />} />
+          <Route exact path="/editcarros/:id" element={<EditCarro />} />
+          <Route exact path="/viewcarros/:id" element={<ViewCarro />} />
           <Route exact path="/listcarro" element={<ListCarro />} />
 
           {/* filiais */}

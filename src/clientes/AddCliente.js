@@ -1,19 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-const FormInput = ({ id, label, value, onChange, type = "text", required = false }) => (
-    <div className="mb-3">
-        <label htmlFor={id} className="form-label">{label}</label>
-        <input
-            type={type}
-            className="form-control"
-            id={id}
-            value={value}
-            onChange={onChange}
-            required={required}
-        />
-    </div>
-);
+import FormInput from '../components/FormInput'; 
 
 export default function AdicionarCliente() {
     const [nome, setNome] = useState('');
