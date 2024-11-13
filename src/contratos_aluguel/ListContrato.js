@@ -5,18 +5,19 @@ import axios from 'axios';
 export default function ListContrato() {
   const [contratos, setContratos] = useState([]);
   const [clientes, setClientes] = useState({});
+  const [carros, setCarros] = useState({});
   const [error, setError] = useState('');
 
-  // Função para carregar os contratos
   useEffect(() => {
     loadContratos();
     loadClientes();
+    loadCarros();
   }, []);
 
   // Função para carregar os contratos
   const loadContratos = async () => {
     try {
-      const result = await axios.get("http://localhost:8080/api/contrato-aluguel"); 
+      const result = await axios.get("http://localhost:8080/api/contrato-aluguel");
       setContratos(result.data);
     } catch (err) {
       setError('Erro ao carregar contratos');
@@ -28,7 +29,6 @@ export default function ListContrato() {
   const loadClientes = async () => {
     try {
       const result = await axios.get("http://localhost:8080/api/cliente");
-      // Mapeia os clientes em um objeto { idCliente: nomeCliente }
       const clienteMap = result.data.reduce((map, cliente) => {
         map[cliente.id] = cliente.nome;
         return map;
@@ -40,14 +40,30 @@ export default function ListContrato() {
     }
   };
 
-  // Função para excluir um contrato
+  // Função para carregar os carros
+  const loadCarros = async () => {
+    try {
+      const result = await axios.get("http://localhost:8080/api/carro");
+      const carroMap = result.data.reduce((map, carro) => {
+        map[carro.id] = carro.modelo; // Supondo que o nome do carro está na propriedade `nome`
+        return map;
+      }, {});
+      setCarros(carroMap);
+    } catch (err) {
+      setError('Erro ao carregar carros');
+      console.error(err);
+    }
+  };
+
   const deleteContrato = async (id) => {
     try {
       await axios.delete(`http://localhost:8080/api/contrato-aluguel/${id}`);
-      loadContratos();  // Recarregar a lista após a exclusão
+  
+      setError(''); // Limpa o erro ao excluir com sucesso
+      loadContratos(); // Recarrega a lista de contratos
     } catch (err) {
-      setError('Erro ao excluir contrato');
-      console.error(err);
+      setError('Erro ao excluir contrato. Verifique o console para mais detalhes.');
+      console.error("Erro ao tentar excluir o contrato:", err);
     }
   };
 
@@ -59,9 +75,10 @@ export default function ListContrato() {
         <thead>
           <tr>
             <th scope="col">Código Contrato</th>
-            <th scope="col">Cliente ID</th>
+            <th scope="col">Cliente_ID</th>
             <th scope="col">Cliente</th>
-            <th scope="col">Carro ID</th>
+            <th scope="col">Carro_ID</th>
+            <th scope="col">Modelo</th>
             <th scope="col">Data Início</th>
             <th scope="col">Data Fim</th>
             <th scope="col">Valor Pago</th>
@@ -75,6 +92,7 @@ export default function ListContrato() {
               <td>{contrato.cliente_id}</td>
               <td>{clientes[contrato.cliente_id] || "Nome não encontrado"}</td>
               <td>{contrato.carro_id}</td>
+              <td>{carros[contrato.carro_id] || "Nome do carro não encontrado"}</td>
               <td>{new Date(contrato.data_inicio).toLocaleDateString()}</td>
               <td>{new Date(contrato.data_fim).toLocaleDateString()}</td>
               <td>{contrato.valor_pago.toFixed(2)}</td>

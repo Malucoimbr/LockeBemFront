@@ -36,6 +36,7 @@ import ConfirmContract from './contratos_aluguel/ConfirmContract';
 import ClientSelector from './contratos_aluguel/ClientSelector'
 import ListContrato from './contratos_aluguel/ListContrato';
 import ViewContrato from './contratos_aluguel/ViewContrato';
+import EditContrato from './contratos_aluguel/EditContrato';
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
           <Route exact path="/confirmcontract" element={<ConfirmContract />} />
           <Route exact path="/listcontrato" element={<ListContrato />} />
           <Route exact path="/viewcontrato/:id" element={<ViewContrato />} />
+          <Route exact path="/editcontrato/:id" element={<EditContrato />} />
           <Route path="/car-list" element={<CarList />} />
 
         </Routes>
