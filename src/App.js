@@ -34,6 +34,8 @@ import DateSelector from './contratos_aluguel/DateSelector'; // Certifique-se de
 import CarList from './contratos_aluguel/CarList';
 import ConfirmContract from './contratos_aluguel/ConfirmContract';
 import ClientSelector from './contratos_aluguel/ClientSelector'
+import ListContrato from './contratos_aluguel/ListContrato';
+import ViewContrato from './contratos_aluguel/ViewContrato';
 
 function App() {
   return (
@@ -70,6 +72,8 @@ function App() {
           <Route exact path="/dateselector" element={<DateSelector />} />
           <Route exact path="/clienteselector" element={<ClientSelector />} />
           <Route exact path="/confirmcontract" element={<ConfirmContract />} />
+          <Route exact path="/listcontrato" element={<ListContrato />} />
+          <Route exact path="/viewcontrato/:id" element={<ViewContrato />} />
           <Route path="/car-list" element={<CarList />} />
 
         </Routes>
