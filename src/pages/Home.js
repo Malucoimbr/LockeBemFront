@@ -40,7 +40,7 @@ export default function Home() {
           <h3>Contratos</h3>
           <p>Gerencie os contratos no sistema.</p>
           <div className="d-grid gap-2">
-            <Link to="/contrato" className="btn btn-primary">Gerenciar Contratos</Link>
+            <Link to="/addcontrato" className="btn btn-primary">Gerenciar Contratos</Link>
           </div>
         </div>
 

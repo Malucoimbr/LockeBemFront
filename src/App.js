@@ -26,10 +26,14 @@ import EditCarro from './carros/EditCarro';
 import ViewCarro from './carros/ViewCarro'
 import ListCarro from './carros/ListCarro';
 import AddCarro from './carros/AddCarro';
-import AddContratoAluguel from './contratos_aluguel/AddContrato';
 
-//
+
+// contrato
 import Contratos from './pages/Contratos';
+import DateSelector from './contratos_aluguel/DateSelector'; // Certifique-se de usar o caminho correto
+import CarList from './contratos_aluguel/CarList';
+import ConfirmContract from './contratos_aluguel/ConfirmContract';
+import ClientSelector from './contratos_aluguel/ClientSelector'
 
 function App() {
   return (
@@ -60,13 +64,13 @@ function App() {
           <Route exact path="/viewfilial/:codigoFilial" element={<ViewFilial />} />
           <Route exact path="/filiais" element={<Filiais />} />
 
-          {/* {contratos} */}
-          {/* <Route exact path="/addcontrato" element={<AddContratoAluguel />} /> */}
-          {/* <Route exact path="/listcontrato" element={<ListContratoAluguel/>} />      
-          <Route exact path="/editcontrato/:id" element={<EditContratoAluguel />} />
-          <Route exact path="/viewcontrato/:id" element={<ViewContratoAluguel />} /> */}
-          {/* <Route exact path="/contrato" element={<Contratos />} />
-           */}
+
+
+          <Route exact path="/addcontrato" element={<Contratos />} />
+          <Route exact path="/dateselector" element={<DateSelector />} />
+          <Route exact path="/clienteselector" element={<ClientSelector />} />
+          <Route exact path="/confirmcontract" element={<ConfirmContract />} />
+          <Route path="/car-list" element={<CarList />} />
 
         </Routes>
       </Router>

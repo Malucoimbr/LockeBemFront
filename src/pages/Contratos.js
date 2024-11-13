@@ -14,7 +14,7 @@ export default function Contratos() {
               <FaFileContract size={40} className="mb-3" /> 
               <h4>Adicionar Contrato</h4>
               <p>Adicione um novo contrato ao sistema.</p>
-              <Link to="/addcontrato" className="btn btn-success btn-lg w-100">Adicionar Contrato</Link> 
+              <Link to="/dateselector" className="btn btn-success btn-lg w-100">Adicionar Contrato</Link> 
             </div>
           </div>
         </div>
