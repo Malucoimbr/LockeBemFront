@@ -57,49 +57,89 @@ export default function ViewContrato() {
   };
 
   return (
-    <div className="container">
-      <h1>Detalhes do Contrato</h1>
-
-      {erro && <div className="alert alert-danger">{erro}</div>}
-
-      {contrato ? (
-        <div className="card">
-          <div className="card-header">
-            <strong>Detalhes do Contrato: </strong>
-          </div>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <b>ID do Contrato:</b> {contrato.id}
-            </li>
-            <li className="list-group-item">
-              <b>Cliente:</b> {cliente.nome || "Nome do cliente não encontrado"}
-            </li>
-            <li className="list-group-item">
-              <b>RG do Cliente:</b> {cliente.rg || "RG do cliente não encontrado"}
-            </li>
-            <li className="list-group-item">
-              <b>Data Início:</b> {new Date(contrato.data_inicio).toLocaleDateString()}
-            </li>
-            <li className="list-group-item">
-              <b>Data Fim:</b> {new Date(contrato.data_fim).toLocaleDateString()}
-            </li>
-            <li className="list-group-item">
-              <b>Carro Modelo:</b> {carro.modelo || "Modelo do carro não encontrado"}
-            </li>
-            <li className="list-group-item">
-              <b>Placa do Carro:</b> {carro.placa || "Placa do carro não encontrada"}
-            </li>
-            <li className="list-group-item">
-              <b>Valor Pago:</b> R$ {contrato.valor_pago.toFixed(2)}
-            </li>
-          </ul>
-          <button className="btn btn-primary mt-3" onClick={generatePDF}>
-            Gerar Relatório em PDF
-          </button>
+    <div className="container" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+  
+  
+    {erro && <div className="alert alert-danger">{erro}</div>}
+  
+    {contrato ? (
+      <div className="card shadow-lg p-4 mb-4">
+        <div className="card-header" style={{
+          width: '100%',
+          color: 'black', 
+          fontSize: '1.5rem', 
+          fontWeight: 'bold',
+          textAlign: 'center',
+          borderRadius: '5px 5px 0 0', // Canto arredondado
+          padding: '15px', // Aumentando o padding para tornar o cabeçalho mais espaçoso
+          height: 'auto', // Ajustando a altura do cabeçalho
+          lineHeight: '1.5' // Ajuste para manter o texto centralizado verticalmente
+        }}>
+          Detalhes do Contrato
         </div>
-      ) : (
-        <p>Carregando contrato...</p>
-      )}
-    </div>
+        <div className="card-body">
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <strong>ID do Contrato:</strong>
+              <p>{contrato.id}</p>
+            </div>
+            <div className="col-md-6 mb-3">
+              <strong>Cliente:</strong>
+              <p>{cliente.nome || "Nome do cliente não encontrado"}</p>
+            </div>
+            <div className="col-md-6 mb-3">
+              <strong>RG do Cliente:</strong>
+              <p>{cliente.rg || "RG do cliente não encontrado"}</p>
+            </div>
+            <div className="col-md-6 mb-3">
+              <strong>Data Início:</strong>
+              <p>{new Date(contrato.data_inicio).toLocaleDateString()}</p>
+            </div>
+            <div className="col-md-6 mb-3">
+              <strong>Data Fim:</strong>
+              <p>{new Date(contrato.data_fim).toLocaleDateString()}</p>
+            </div>
+            <div className="col-md-6 mb-3">
+              <strong>Modelo do Carro:</strong>
+              <p>{carro.modelo || "Modelo do carro não encontrado"}</p>
+            </div>
+            <div className="col-md-6 mb-3">
+              <strong>Placa do Carro:</strong>
+              <p>{carro.placa || "Placa do carro não encontrada"}</p>
+            </div>
+            <div className="col-md-6 mb-3">
+              <strong>Valor Pago:</strong>
+              <p>R$ {contrato.valor_pago.toFixed(2)}</p>
+            </div>
+          </div>
+  
+          {/* Botão centralizado com estilo melhorado */}
+          <div className="d-flex justify-content-center mt-4">
+            <button 
+              className="btn btn-success"
+              onClick={generatePDF}
+              style={{
+                backgroundColor: '#28a745', 
+                borderColor: '#218838', 
+                padding: '10px 20px', 
+                fontSize: '1rem',
+                borderRadius: '5px',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#218838'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#28a745'}
+            >
+              Gerar Relatório em PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <p>Carregando contrato...</p>
+    )}
+  </div>
+  
+
+  
   );
 }

@@ -1,0 +1,91 @@
+/* Container centralizado e com boa margem */
+.contract-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Helvetica', sans-serif;
+    color: #333;
+  }
+  
+  /* Título centralizado, simples e com uma cor elegante */
+  .title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+  
+  /* Cartão de detalhes com bordas simples e espaçamento agradável */
+  .card {
+    background-color: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+  }
+  
+  /* Detalhes simples, com espaçamento adequado e alinhamento claro */
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .label {
+    font-weight: 600;
+    color: #34495e;
+  }
+  
+  /* Botão de confirmação simples, mas com efeito sutil */
+  button {
+    width: 100%;
+    padding: 14px;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #007bff;
+    transform: scale(1.05);
+  }
+  
+  button:active {
+    background-color: #007bff;
+  }
+  
+  /* Estilo responsivo para telas menores */
+  @media (max-width: 768px) {
+    .contract-container {
+      padding: 15px;
+    }
+  
+    .title {
+      font-size: 22px;
+    }
+  
+    .card {
+      padding: 15px;
+    }
+  
+    .detail-item {
+      font-size: 14px;
+    }
+  
+    button {
+      padding: 12px;
+      font-size: 16px;
+    }
+  }
+  

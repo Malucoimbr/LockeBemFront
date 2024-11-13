@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom"; 
 import axios from "axios";
+import './ConfirmContract.css'; // Importando o CSS estilizado
 
 const ConfirmContract = () => {
   const { state } = useLocation(); 
@@ -9,7 +10,6 @@ const ConfirmContract = () => {
   const [carroDetalhado, setCarroDetalhado] = useState(null);
   const [clienteDetalhado, setClienteDetalhado] = useState(null);
   const [carregando, setCarregando] = useState(true);
-
 
   const fetchCarroDetalhado = async () => {
     if (carro) {
@@ -22,7 +22,6 @@ const ConfirmContract = () => {
     }
   };
 
-  
   const fetchClienteDetalhado = async () => {
     if (clienteId) {
       try {
@@ -39,20 +38,14 @@ const ConfirmContract = () => {
     fetchClienteDetalhado();
   }, [carro, clienteId]); 
 
-
   const diasCount = (dataInicio && dataFinal) 
     ? Math.floor((new Date(dataFinal) - new Date(dataInicio)) / (1000 * 3600 * 24)) 
     : 0;  
-  console.log("Data Início:", dataInicio, "Data Final:", dataFinal, "Dias de Aluguel:", diasCount);
-
 
   const valorTotalCalculado = carroDetalhado ? carroDetalhado.valorDiaria * diasCount : 0;
-  console.log("Valor Total Calculado:", valorTotalCalculado);
-
 
   const confirmarContrato = async () => {
     try {
-      
       const dadosContrato = {
         cliente_id: clienteId,  
         carro_id: carroDetalhado?.id, 
@@ -60,8 +53,6 @@ const ConfirmContract = () => {
         data_fim: dataFinal,  
         valor_pago: valorTotalCalculado,  
       };
-
-      console.log("Enviando os dados para o contrato:", dadosContrato);
 
       const response = await axios.post(
         `http://localhost:8080/api/contrato-aluguel/confirmar-contrato`,
@@ -73,7 +64,6 @@ const ConfirmContract = () => {
         }
       );
 
-      console.log("Resposta da API:", response.data);
       alert("Contrato confirmado!");
       navigate("/contrato-confirmado");
     } catch (error) {
@@ -83,18 +73,39 @@ const ConfirmContract = () => {
   };
 
   return (
-    <div>
-      <h3>Confirme o Contrato</h3>
-      {clienteDetalhado && <p><strong>Cliente:</strong> {clienteDetalhado.nome}</p>}
-      {carroDetalhado && (
-        <>
-          <p><strong>Carro:</strong> {carroDetalhado.modelo}</p>
-          <p><strong>Valor diário:</strong> {carroDetalhado.valorDiaria}</p>
-        </>
-      )}
-      <p><strong>Período de Aluguel:</strong> {diasCount} dias</p>
-      <p><strong>Valor Total:</strong> {valorTotalCalculado.toFixed(2)}</p>
-      <button onClick={confirmarContrato}>Confirmar Contrato</button>
+    <div className="contract-container">
+      <h3 className="title">Confirme o Contrato</h3>
+      <div className="card">
+        {clienteDetalhado && (
+          <div className="detail-item">
+            <span className="label">Cliente:</span>
+            <span>{clienteDetalhado.nome}</span>
+          </div>
+        )}
+        {carroDetalhado && (
+          <>
+            <div className="detail-item">
+              <span className="label">Carro:</span>
+              <span>{carroDetalhado.modelo}</span>
+            </div>
+            <div className="detail-item">
+              <span className="label">Valor diário:</span>
+              <span>R$ {carroDetalhado.valorDiaria}</span>
+            </div>
+          </>
+        )}
+        <div className="detail-item">
+          <span className="label">Período de Aluguel:</span>
+          <span>{diasCount} dias</span>
+        </div>
+        <div className="detail-item">
+          <span className="label">Valor Total:</span>
+          <span>R$ {valorTotalCalculado.toFixed(2)}</span>
+        </div>
+      </div>
+      <button className="confirm-button" onClick={confirmarContrato}>
+        Confirmar Contrato
+      </button>
     </div>
   );
 };

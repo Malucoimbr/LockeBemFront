@@ -1,38 +1,69 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import './ClienteSelector.css'; 
 
 const ClientSelector = () => {
-  const [clienteId, setClienteId] = useState(""); // Armazenar o ID do cliente
+  const [clienteId, setClienteId] = useState(""); 
+  const [rg, setRg] = useState(""); 
+  const [isLoading, setIsLoading] = useState(false); 
+  const [error, setError] = useState(""); 
   const navigate = useNavigate();
-  const { state } = useLocation(); // Captura o estado passado da tela anterior
-  const { dataInicio, dataFinal, carro } = state || {}; // Recebe as datas e o carro
+  const { state } = useLocation(); 
+  const { dataInicio, dataFinal, carro } = state || {}; 
 
-  const handleSelectCliente = () => {
-    if (clienteId) {
-      // Navegar para a tela de contrato passando clienteId, datas e carro
-      navigate("/confirmcontract", {
-        state: {
-          clienteId,  // Passando o clienteId
-          dataInicio, // Passando a data de início
-          dataFinal,  // Passando a data final
-          carro,      // Passando o carro selecionado
-        },
-      });
+  const handleSelectCliente = async () => {
+    if (rg || clienteId) {
+      setIsLoading(true);
+      setError(""); 
+
+      try {
+        const existsResponse = await axios.get(
+          `http://localhost:8080/api/cliente/idByRg/${rg}`
+        );
+
+        if (existsResponse.status === 200) {
+          setClienteId(existsResponse.data); 
+          navigate("/confirmcontract", {
+            state: {
+              clienteId: existsResponse.data, 
+              rg,                           
+              dataInicio,                   
+              dataFinal,                    
+              carro,                        
+            },
+          });
+        } else {
+          setError(existsResponse.data);  
+        }
+      } catch (err) {
+        setError("Erro ao buscar cliente. Tente novamente.");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       alert("Selecione um cliente!");
     }
   };
 
   return (
-    <div>
+    <div className="client-selector-container">
       <h3>Selecione o Cliente</h3>
-      <input
-        type="text"
-        value={clienteId}
-        onChange={(e) => setClienteId(e.target.value)}
-        placeholder="Digite o ID do Cliente"
-      />
-      <button onClick={handleSelectCliente}>Selecionar Cliente</button>
+      <div className="input-container">
+        <input
+          className="input-field"
+          type="text"
+          value={rg}
+          onChange={(e) => setRg(e.target.value)}
+          placeholder="Digite o RG do Cliente"
+        />
+      </div>
+      {isLoading && <p className="loading-text">Carregando...</p>}
+      {error && <p className="error-text">{error}</p>}
+      <button className="select-button" onClick={handleSelectCliente}>
+        Selecionar Cliente
+      </button>
     </div>
   );
 };

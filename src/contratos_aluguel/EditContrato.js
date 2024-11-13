@@ -124,8 +124,10 @@ export default function EditarContrato() {
               />
             </div>
 
-            <button type="submit" className="btn btn-outline-primary">Atualizar Contrato</button>
-            <Link className="btn btn-outline-danger mx-2" to="/listcontrato">Cancelar</Link>
+            <div className="d-flex flex-column">
+    <button type="submit" className="btn btn-outline-primary w-100 mb-2">Atualizar Contrato</button>
+    <Link className="btn btn-outline-danger w-100" to="/listcontrato">Cancelar</Link>
+  </div>
           </form>
         </div>
       </div>

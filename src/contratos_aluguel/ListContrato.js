@@ -97,10 +97,12 @@ export default function ListContrato() {
               <td>{new Date(contrato.data_fim).toLocaleDateString()}</td>
               <td>{contrato.valor_pago.toFixed(2)}</td>
               <td>
+              <div className="d-flex justify-content-between">
                 <Link className="btn btn-primary mx-2" to={`/viewcontrato/${contrato.id}`}>Ver</Link>
                 <Link className="btn btn-outline-primary mx-2" to={`/editcontrato/${contrato.id}`}>Editar</Link>
                 <button className="btn btn-danger mx-2" onClick={() => deleteContrato(contrato.id)}>Excluir</button>
-              </td>
+              </div>
+            </td>
             </tr>
           ))}
         </tbody>
