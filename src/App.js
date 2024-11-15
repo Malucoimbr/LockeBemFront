@@ -14,7 +14,12 @@ import EditCliente from './clientes/EditCliente';
 import ViewCliente from './clientes/ViewCliente';
 import ListCliente from './clientes/ListCliente';
 
-
+// funcionário
+import Funcionarios from './pages/Funcionarios';  
+import AddFuncionario from './funcionarios/AddFuncionario';
+import EditFuncionario from './funcionarios/EditFuncionario';
+import ViewFuncionario from './funcionarios/ViewFuncionario';
+import ListFuncionario from './funcionarios/ListFuncionario';
 
 import AddFilial from './filiais/AddFilial';  
 import ListFilial from './filiais/ListFilial';  
@@ -26,7 +31,7 @@ import EditCarro from './carros/EditCarro';
 import ViewCarro from './carros/ViewCarro'
 import ListCarro from './carros/ListCarro';
 import AddCarro from './carros/AddCarro';
-
+import ListDocumento from './carros/ListDocumento'
 
 // contrato
 import Contratos from './pages/Contratos';
@@ -59,6 +64,7 @@ function App() {
           <Route exact path="/editcarros/:id" element={<EditCarro />} />
           <Route exact path="/viewcarros/:id" element={<ViewCarro />} />
           <Route exact path="/listcarro" element={<ListCarro />} />
+          <Route exact path="/listdocumento" element={<ListDocumento />} />
 
           {/* filiais */}
           <Route exact path="/addfilial" element={<AddFilial />} />
@@ -66,6 +72,14 @@ function App() {
           <Route exact path="/editfilial/:codigoFilial" element={<EditFilial />} />
           <Route exact path="/viewfilial/:codigoFilial" element={<ViewFilial />} />
           <Route exact path="/filiais" element={<Filiais />} />
+
+          
+            {/* funcionários */}
+            <Route exact path="/funcionarios" element={<Funcionarios />} />
+          <Route exact path="/addfuncionario" element={<AddFuncionario />} />
+          <Route exact path="/editfuncionario/:id" element={<EditFuncionario />} />
+          <Route exact path="/viewfuncionario/:id" element={<ViewFuncionario />} />
+          <Route exact path="/listfuncionario" element={<ListFuncionario />} />
 
 
 

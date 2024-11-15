@@ -7,24 +7,27 @@ export default function EditCar() {
     const navigate = useNavigate();
 
     const [carro, setCarro] = useState({
-        placa: '',
-        modelo: '',
-        ano_fab: '',
         km: '',
-        tipo_carro: '',
-        Filial_id: '',
-        valor_diaria: '',
+        carroTipo: '',
+        filialId: '',
+        valorDiaria: '',
+        documentoCarroId: '',
     });
 
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [validationErrors, setValidationErrors] = useState({});
+
+    // Variável para armazenar os dados iniciais
+    const [initialCarro, setInitialCarro] = useState({});
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/carro/${id}`)
             .then(response => {
                 setCarro(response.data);
+                setInitialCarro(response.data); // Armazena os dados iniciais
                 setLoading(false);
             })
             .catch(error => {
@@ -41,13 +44,11 @@ export default function EditCar() {
 
     const validateForm = () => {
         let errors = {};
-        if (!carro.placa) errors.placa = 'Placa é obrigatória.';
-        if (!carro.modelo) errors.modelo = 'Modelo é obrigatório.';
-        if (!carro.ano_fab) errors.ano_fab = 'Ano de fabricação é obrigatório.';
-        if (!carro.km) errors.km = 'Quilometragem é obrigatória.';
-        if (!carro.carroTipo) errors.tipo_carro = 'Tipo de carro é obrigatório.';
-        if (!carro.filialId) errors.codigoFilial = 'Código da filial é obrigatório.';
-        if (!carro.valorDiaria) errors.valorDiaria = 'O valor da diária é obrigatório.';
+        if (!carro.km || carro.km <= 0) errors.km = 'Quilometragem é obrigatória e deve ser maior que zero.';
+        if (!carro.carroTipo) errors.carroTipo = 'Tipo de carro é obrigatório.';
+        if (!carro.filialId) errors.filialId = 'Código da filial é obrigatório.';
+        if (!carro.valorDiaria || carro.valorDiaria <= 0) errors.valorDiaria = 'O valor da diária é obrigatório e deve ser maior que zero.';
+        if (!carro.documentoCarroId) errors.documentoCarroId = 'Documento do carro é obrigatório.';
         setValidationErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -56,17 +57,28 @@ export default function EditCar() {
         e.preventDefault();
         setIsSubmitting(true);
         setError('');
+        setSuccessMessage('');
         setValidationErrors({});
-
+    
         // Validação de campos
         if (!validateForm()) {
             setIsSubmitting(false);
             return;
         }
-
+    
+        const updatedCarro = {};
+    
+        // Enviar apenas os campos modificados
+        Object.keys(carro).forEach(key => {
+            if (carro[key] !== initialCarro[key]) { // Verifica se o valor foi alterado
+                updatedCarro[key] = carro[key];
+            }
+        });
+    
         try {
-            await axios.put(`http://localhost:8080/api/carro/${id}`, carro);
-            alert('Carro atualizado com sucesso!');
+            await axios.put(`http://localhost:8080/api/carro/${id}`, updatedCarro);
+            setSuccessMessage('Carro atualizado com sucesso!');
+            setIsSubmitting(false);
             navigate('/listcars');
         } catch (error) {
             console.error('Erro ao atualizar o carro!', error);
@@ -82,44 +94,9 @@ export default function EditCar() {
     return (
         <div>
             <h2>Editar Carro</h2>
+            {successMessage && <div className="alert alert-success">{successMessage}</div>}
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="placa" className="form-label">Placa</label>
-                    <input
-                        type="text"
-                        className={`form-control ${validationErrors.placa ? 'is-invalid' : ''}`}
-                        id="placa"
-                        name="placa"
-                        value={carro.placa}
-                        onChange={handleChange}
-                    />
-                    {validationErrors.placa && <div className="invalid-feedback">{validationErrors.placa}</div>}
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="modelo" className="form-label">Modelo</label>
-                    <input
-                        type="text"
-                        className={`form-control ${validationErrors.modelo ? 'is-invalid' : ''}`}
-                        id="modelo"
-                        name="modelo"
-                        value={carro.modelo}
-                        onChange={handleChange}
-                    />
-                    {validationErrors.modelo && <div className="invalid-feedback">{validationErrors.modelo}</div>}
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="ano_fab" className="form-label">Ano de Fabricação</label>
-                    <input
-                        type="number"
-                        className={`form-control ${validationErrors.ano_fab ? 'is-invalid' : ''}`}
-                        id="ano_fab"
-                        name="ano_fab"
-                        value={carro.ano_fab}
-                        onChange={handleChange}
-                    />
-                    {validationErrors.ano_fab && <div className="invalid-feedback">{validationErrors.ano_fab}</div>}
-                </div>
                 <div className="mb-3">
                     <label htmlFor="km" className="form-label">Quilometragem</label>
                     <input
@@ -132,48 +109,63 @@ export default function EditCar() {
                     />
                     {validationErrors.km && <div className="invalid-feedback">{validationErrors.km}</div>}
                 </div>
+
                 <div className="mb-3">
                     <label htmlFor="tipo_carro" className="form-label">Tipo de Carro</label>
                     <input
                         type="text"
-                        className={`form-control ${validationErrors.tipo_carro ? 'is-invalid' : ''}`}
+                        className={`form-control ${validationErrors.carroTipo ? 'is-invalid' : ''}`}
                         id="tipo_carro"
-                        name="tipo_carro"
+                        name="carroTipo"
                         value={carro.carroTipo}
                         onChange={handleChange}
                     />
-                    {validationErrors.tipo_carro && <div className="invalid-feedback">{validationErrors.tipo_carro}</div>}
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="codigoFilial" className="form-label">Código da Filial</label>
-                    <input
-                        type="text"
-                        className={`form-control ${validationErrors.codigoFilial ? 'is-invalid' : ''}`}
-                        id="codigoFilial"
-                        name="codigoFilial"
-                        value={carro.filialId}
-                        onChange={handleChange}
-                    />
-                    {validationErrors.codigoFilial && <div className="invalid-feedback">{validationErrors.codigoFilial}</div>}
+                    {validationErrors.carroTipo && <div className="invalid-feedback">{validationErrors.carroTipo}</div>}
                 </div>
 
                 <div className="mb-3">
-                    <label htmlFor="codigoFilial" className="form-label">Valor da diária</label>
+                    <label htmlFor="filialId" className="form-label">Código da Filial</label>
                     <input
                         type="text"
-                        className={`form-control ${validationErrors.codigoFilial ? 'is-invalid' : ''}`}
+                        className={`form-control ${validationErrors.filialId ? 'is-invalid' : ''}`}
+                        id="filialId"
+                        name="filialId"
+                        value={carro.filialId}
+                        onChange={handleChange}
+                    />
+                    {validationErrors.filialId && <div className="invalid-feedback">{validationErrors.filialId}</div>}
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="valorDiaria" className="form-label">Valor da diária</label>
+                    <input
+                        type="text"
+                        className={`form-control ${validationErrors.valorDiaria ? 'is-invalid' : ''}`}
                         id="valorDiaria"
                         name="valorDiaria"
                         value={carro.valorDiaria}
                         onChange={handleChange}
                     />
-                    {validationErrors.codigoFilial && <div className="invalid-feedback">{validationErrors.codigoFilial}</div>}
+                    {validationErrors.valorDiaria && <div className="invalid-feedback">{validationErrors.valorDiaria}</div>}
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="documentoCarroId" className="form-label">Documento do Carro</label>
+                    <input
+                        type="text"
+                        className={`form-control ${validationErrors.documentoCarroId ? 'is-invalid' : ''}`}
+                        id="documentoCarroId"
+                        name="documentoCarroId"
+                        value={carro.documentoCarroId}
+                        onChange={handleChange}
+                    />
+                    {validationErrors.documentoCarroId && <div className="invalid-feedback">{validationErrors.documentoCarroId}</div>}
                 </div>
 
                 <button 
                     type="submit" 
                     className="btn btn-primary"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || Object.keys(validationErrors).length > 0}
                 >
                     {isSubmitting ? 'Salvando...' : 'Salvar Alterações'}
                 </button>

@@ -38,26 +38,24 @@ export default function ListCars() {
         <table className="table border shadow">
           <thead>
             <tr>
-              <th>Placa</th>
-              <th>Modelo</th>
-              <th>Ano de Fabricação</th>
               <th>Quilometragem</th>
               <th>Tipo de Carro</th>
               <th>Código da Filial</th>
               <th>Valor da diária</th>
+              <th>Código do Documento</th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
             {carros.map(carro => (
               <tr key={carro.id}>
-                <td>{carro.placa}</td>
-                <td>{carro.modelo}</td>
-                <td>{carro.ano_fab}</td>
+    
+
                 <td>{carro.km}</td>
                 <td>{carro.carroTipo}</td>
                 <td>{carro.filialId}</td>
                 <td>{carro.valorDiaria}</td>
+                <td>{carro.documentoCarroId}</td>
                 <td>
                   <Link to={`/viewcarros/${carro.id}`} className="btn btn-info">Ver</Link>
                   <Link to={`/editcarros/${carro.id}`} className="btn btn-outline-primary mx-2">Editar</Link>

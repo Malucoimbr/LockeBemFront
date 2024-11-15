@@ -44,6 +44,15 @@ export default function Home() {
           </div>
         </div>
 
+        <div className="col-md-4 text-center mb-4">
+        <FaUsers size={50} />
+        <h3>Funcionários</h3>
+        <p>Gerencie os Funcionários no sistema.</p>
+        <div className="d-grid gap-2">
+          <Link to="/funcionarios" className="btn btn-primary">Gerenciar Funcionários</Link>
+        </div>
+      </div>
+
       </div>
     </div>
   );
