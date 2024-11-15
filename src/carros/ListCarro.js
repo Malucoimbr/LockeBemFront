@@ -49,7 +49,6 @@ export default function ListCars() {
           <tbody>
             {carros.map(carro => (
               <tr key={carro.id}>
-    
 
                 <td>{carro.km}</td>
                 <td>{carro.carroTipo}</td>

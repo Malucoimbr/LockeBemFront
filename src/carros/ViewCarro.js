@@ -50,9 +50,7 @@ export default function ViewCar() {
           </div>
           <div className="card-body">
             <ul className="list-group list-group-flush">
-              <li className="list-group-item"><strong>Placa:</strong> {carro.placa}</li>
-              <li className="list-group-item"><strong>Modelo:</strong> {carro.modelo}</li>
-              <li className="list-group-item"><strong>Ano de Fabricação:</strong> {carro.anoFab}</li>
+            <li className="list-group-item"><strong>Código do Documento:</strong> {carro.id}</li>
               <li className="list-group-item"><strong>Quilometragem:</strong> {carro.km}</li>
               <li className="list-group-item"><strong>Tipo de Carro:</strong> {carro.carroTipo}</li>
               <li className="list-group-item"><strong>Código da Filial:</strong> {carro.filialId}</li>

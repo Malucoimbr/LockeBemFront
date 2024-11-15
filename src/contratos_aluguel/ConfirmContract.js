@@ -6,21 +6,25 @@ import './ConfirmContract.css'; // Importando o CSS estilizado
 const ConfirmContract = () => {
   const { state } = useLocation(); 
   const navigate = useNavigate();
-  const { carro, dataInicio, dataFinal, clienteId } = state || {}; 
+  const { carro, dataInicio, dataFinal, clienteId, seguroId, funcionarioId } = state || {}; // Desestruturando seguroId e funcionarioId
   const [carroDetalhado, setCarroDetalhado] = useState(null);
   const [clienteDetalhado, setClienteDetalhado] = useState(null);
+  const [seguroDetalhado, setSeguroDetalhado] = useState(null);
+  const [funcionarioDetalhado, setFuncionarioDetalhado] = useState(null);
   const [carregando, setCarregando] = useState(true);
 
   const fetchCarroDetalhado = async () => {
     if (carro) {
       try {
-        const response = await axios.get(`http://localhost:8080/api/carro/${carro.id}`); 
+        const response = await axios.get(`http://localhost:8080/api/carro/${carro.id}`);
+        console.log(response.data);  // Verifique o formato da resposta
         setCarroDetalhado(response.data);
       } catch (error) {
         console.error("Erro ao buscar dados do carro:", error);
       }
     }
   };
+  
 
   const fetchClienteDetalhado = async () => {
     if (clienteId) {
@@ -33,10 +37,36 @@ const ConfirmContract = () => {
     }
   };
 
+  const fetchSeguroDetalhado = async () => {
+    if (seguroId) {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/seguro/${seguroId}`); 
+        setSeguroDetalhado(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar dados do seguro:", error);
+      }
+    }
+  };
+
+  const fetchFuncionarioDetalhado = async () => {
+    if (funcionarioId) {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/funcionario/${funcionarioId}`);
+        setFuncionarioDetalhado(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar dados do funcionário:", error);
+      }
+    }
+  };
+
   useEffect(() => {
+    console.log(carroDetalhado); // Adicione esta linha para ver o que está sendo retornado
     fetchCarroDetalhado();
     fetchClienteDetalhado();
-  }, [carro, clienteId]); 
+    fetchSeguroDetalhado();
+    fetchFuncionarioDetalhado();
+  }, [carro, clienteId, seguroId, funcionarioId]);
+  
 
   const diasCount = (dataInicio && dataFinal) 
     ? Math.floor((new Date(dataFinal) - new Date(dataInicio)) / (1000 * 3600 * 24)) 
@@ -47,13 +77,17 @@ const ConfirmContract = () => {
   const confirmarContrato = async () => {
     try {
       const dadosContrato = {
-        cliente_id: clienteId,  
-        carro_id: carroDetalhado?.id, 
-        data_inicio: dataInicio,  
-        data_fim: dataFinal,  
-        valor_pago: valorTotalCalculado,  
+        clienteId: clienteId,  
+        carroId: carroDetalhado?.id, 
+        dataInicio: dataInicio,  
+        dataFim: dataFinal,  
+        valorPago: valorTotalCalculado,  
+        seguroId: seguroId, // Adicionando seguroId
+        funcionarioId: funcionarioId, // Adicionando funcionarioId
       };
-
+  
+      console.log(dadosContrato);  // Verifique o que está sendo enviado
+  
       const response = await axios.post(
         `http://localhost:8080/api/contrato-aluguel/confirmar-contrato`,
         dadosContrato,  
@@ -63,7 +97,7 @@ const ConfirmContract = () => {
           },
         }
       );
-
+  
       alert("Contrato confirmado!");
       navigate("/contrato-confirmado");
     } catch (error) {
@@ -71,43 +105,58 @@ const ConfirmContract = () => {
       alert("Erro ao confirmar contrato. Tente novamente.");
     }
   };
+  
 
-  return (
-    <div className="contract-container">
-      <h3 className="title">Confirme o Contrato</h3>
-      <div className="card">
-        {clienteDetalhado && (
+
+    return (
+      <div className="contract-container">
+        <h3 className="title">Confirme o Contrato</h3>
+        <div className="card">
+          {clienteDetalhado && (
+            <div className="detail-item">
+              <span className="label">Cliente:</span>
+              <span>{clienteDetalhado.nome}</span>
+            </div>
+          )}
+          {carroDetalhado && (
+            <>
+              <div className="detail-item">
+                <span className="label">Carro:</span>
+                <span>{carroDetalhado.id}</span>
+              </div>
+              <div className="detail-item">
+                <span className="label">Valor diário:</span>
+                <span>R$ {carroDetalhado.valorDiaria ? carroDetalhado.valorDiaria : "Valor não disponível"}</span>
+              </div>
+            </>
+          )}
+          {seguroDetalhado && (
+            <div className="detail-item">
+              <span className="label">Seguro:</span>
+              <span>Id: {seguroDetalhado.id}, Cobertura: {seguroDetalhado.cobertura}</span>
+            </div>
+          )}
+          {funcionarioDetalhado && (
+            <div className="detail-item">
+              <span className="label">Funcionário:</span>
+              <span>Id: {funcionarioDetalhado.id}, Nome: {funcionarioDetalhado.nome}</span>
+            </div>
+          )}
           <div className="detail-item">
-            <span className="label">Cliente:</span>
-            <span>{clienteDetalhado.nome}</span>
+            <span className="label">Período de Aluguel:</span>
+            <span>{diasCount} dias</span>
           </div>
-        )}
-        {carroDetalhado && (
-          <>
-            <div className="detail-item">
-              <span className="label">Carro:</span>
-              <span>{carroDetalhado.modelo}</span>
-            </div>
-            <div className="detail-item">
-              <span className="label">Valor diário:</span>
-              <span>R$ {carroDetalhado.valorDiaria}</span>
-            </div>
-          </>
-        )}
-        <div className="detail-item">
-          <span className="label">Período de Aluguel:</span>
-          <span>{diasCount} dias</span>
+          <div className="detail-item">
+            <span className="label">Valor Total:</span>
+            <span>R$ {valorTotalCalculado.toFixed(2)}</span>
+          </div>
         </div>
-        <div className="detail-item">
-          <span className="label">Valor Total:</span>
-          <span>R$ {valorTotalCalculado.toFixed(2)}</span>
-        </div>
+        <button className="confirm-button" onClick={confirmarContrato}>
+          Confirmar Contrato
+        </button>
       </div>
-      <button className="confirm-button" onClick={confirmarContrato}>
-        Confirmar Contrato
-      </button>
-    </div>
-  );
+    );
+  
 };
 
 export default ConfirmContract;

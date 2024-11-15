@@ -53,6 +53,16 @@ export default function Home() {
         </div>
       </div>
 
+      <div className="col-md-4 text-center mb-4">
+        <FaUsers size={50} />
+        <h3>Seguros</h3>
+        <p>Gerencie os Seguros no sistema.</p>
+        <div className="d-grid gap-2">
+          <Link to="/seguros" className="btn btn-primary">Gerenciar Seguros</Link>
+        </div>
+      </div>
+
+
       </div>
     </div>
   );
