@@ -14,6 +14,20 @@ import EditCliente from './clientes/EditCliente';
 import ViewCliente from './clientes/ViewCliente';
 import ListCliente from './clientes/ListCliente';
 
+// multas
+import Multas from './pages/Multas';  
+import AddMulta from './multas/AddMulta';
+import EditMulta from './multas/EditMulta';
+import ViewMulta from './multas/ViewMulta';
+import ListMulta from './multas/ListMulta';
+
+// manutenções
+import Manutencoes from './pages/Manutencoes';  
+import AddManutencao from './manutencoes/AddManutencao';
+import EditManutencao from './manutencoes/EditManutencao';
+import ViewManutencao from './manutencoes/ViewManutencao';
+import ListManutencao from './manutencoes/ListManutencao';
+
 // funcionário
 import Funcionarios from './pages/Funcionarios';  
 import AddFuncionario from './funcionarios/AddFuncionario';
@@ -46,6 +60,8 @@ import ClientSelector from './contratos_aluguel/ClientSelector'
 import ListContrato from './contratos_aluguel/ListContrato';
 import ViewContrato from './contratos_aluguel/ViewContrato';
 import EditContrato from './contratos_aluguel/EditContrato';
+import ViewMantencao from './manutencoes/ViewManutencao';
+
 
 function App() {
   return (
@@ -77,6 +93,19 @@ function App() {
           <Route exact path="/viewfilial/:codigoFilial" element={<ViewFilial />} />
           <Route exact path="/filiais" element={<Filiais />} />
 
+          {/* multas */}
+          <Route exact path="/multas" element={<Multas />} />
+          <Route exact path="/addmulta" element={<AddMulta />} />
+          <Route exact path="/editmulta/:id" element={<EditMulta />} />
+          <Route exact path="/viewmulta/:id" element={<ViewMulta />} />
+          <Route exact path="/listmulta" element={<ListMulta />} />
+
+          {/* manutencoes */}
+          <Route exact path="/manutencoes" element={<Manutencoes />} />
+          <Route exact path="/addmanutencao" element={<AddManutencao />} />
+          <Route exact path="/editmanutencao/:id" element={<EditManutencao />} />
+          <Route exact path="/viewmanutencao/:id" element={<ViewMantencao />} />
+          <Route exact path="/listmanutencao" element={<ListManutencao />} />
           
             {/* funcionários */}
           <Route exact path="/funcionarios" element={<Funcionarios />} />

@@ -61,8 +61,24 @@ export default function Home() {
           <Link to="/seguros" className="btn btn-primary">Gerenciar Seguros</Link>
         </div>
       </div>
+      
+      <div className="col-md-4 text-center mb-4">
+          <FaCar size={50} />
+          <h3>Multas</h3>
+          <p>Gerencie as multas no sistema.</p>
+          <div className="d-grid gap-2">
+            <Link to="/multas" className="btn btn-primary">Gerenciar Multas</Link>
+          </div>
+      </div>
 
-
+      <div className="col-md-4 text-center mb-4">
+          <FaCar size={50} />
+          <h3>Manutenções</h3>
+          <p>Gerencie as manutenções no sistema.</p>
+          <div className="d-grid gap-2">
+            <Link to="/manutencoes" className="btn btn-primary">Gerenciar Manutenções</Link>
+          </div>
+      </div>
       </div>
     </div>
   );
