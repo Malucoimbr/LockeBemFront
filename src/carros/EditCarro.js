@@ -25,16 +25,18 @@ export default function EditCar() {
 
     useEffect(() => {
         axios.get(`http://localhost:8080/api/carro/${id}`)
-            .then(response => {
-                setCarro(response.data);
-                setInitialCarro(response.data); // Armazena os dados iniciais
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error('Erro ao carregar o carro!', error);
-                setError('Erro ao carregar os dados do carro.');
-                setLoading(false);
-            });
+        .then(response => {
+          console.log(response.data);  // Verifique os dados retornados
+          setCarro(response.data);
+          setInitialCarro(response.data);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Erro ao carregar o carro!', error);
+          setError('Erro ao carregar os dados do carro.');
+          setLoading(false);
+        });
+      
     }, [id]);
 
     const handleChange = (e) => {

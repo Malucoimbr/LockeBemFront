@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaSlidersH, FaUser, FaTruck, FaBuilding, FaFileContract, FaUsers, FaShieldAlt, FaExclamationTriangle, FaTools } from "react-icons/fa";
+import '../css/sidebar.css';
 
 export default function Sidebar() {
   return (
@@ -10,7 +11,7 @@ export default function Sidebar() {
           <span className="align-middle">Lokebem</span>
         </a>
         <ul className="sidebar-nav">
-          <li className="sidebar-header">Pages</li>
+          <li className="sidebar-header">Páginas</li>
 
           <li className="sidebar-item active">
             <Link className="sidebar-link" to="/">

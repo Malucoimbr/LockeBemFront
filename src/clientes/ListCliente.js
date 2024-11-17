@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function ListCliente() {
   const [clientes, setClientes] = useState([]); 
@@ -47,22 +48,30 @@ export default function ListCliente() {
             <th scope="col">Rua</th>
             <th scope="col">Bairro</th>
             <th scope="col">Número</th>
+            <th scope="col">Ações</th>
           </tr>
         </thead>
         <tbody>
           {clientes.map((cliente) => (
-            <tr key={cliente.rg}>  {/* Alterado para usar rg como chave */}
-              <th scope="row">{cliente.rg}</th> {/* Usando rg como identificador */}
+            <tr key={cliente.rg}>
+              <td>{cliente.rg}</td>
               <td>{cliente.nome}</td>
               <td>{cliente.email}</td>
               <td>{cliente.telefone}</td>
               <td>{cliente.rua}</td>
               <td>{cliente.bairro}</td>
               <td>{cliente.numero}</td>
-              <td>
-                <Link className="btn btn-primary mx-2" to={`/viewcliente/${cliente.id}`}>Ver</Link>
-                <Link className="btn btn-outline-primary mx-2" to={`/editcliente/${cliente.id}`}>Editar</Link>
-                <button className="btn btn-danger mx-2" onClick={() => deleteCliente(cliente.id)}>Excluir</button>
+              <td className="d-flex justify-content-center">
+                {/* Botões com ícones e estilização aprimorada */}
+                <Link className="btn btn-outline-primary mx-2" to={`/viewcliente/${cliente.id}`}>
+                  <FaEye size={18} /> <span className="d-none d-sm-inline">Ver</span>
+                </Link>
+                <Link className="btn btn-outline-warning mx-2" to={`/editcliente/${cliente.id}`}>
+                  <FaEdit size={18} /> <span className="d-none d-sm-inline">Editar</span>
+                </Link>
+                <button className="btn btn-outline-danger mx-2" onClick={() => deleteCliente(cliente.id)}>
+                  <FaTrash size={18} /> <span className="d-none d-sm-inline">Excluir</span>
+                </button>
               </td>
             </tr>
           ))}

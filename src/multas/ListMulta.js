@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function ListMulta() {
   const [multas, setMultas] = useState([]);
@@ -34,29 +35,37 @@ export default function ListMulta() {
     <div className="container">
       <div className="py-4"></div>
       {error && <div className="alert alert-danger">{error}</div>}
+      <h2 className="text-center my-4">Lista de Multas</h2>
       <table className="table border shadow">
         <thead>
           <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Data da Multa</th>
-            <th scope="col">Tipo de Infração</th>
-            <th scope="col">Valor da Multa</th>
-            <th scope="col">ID do Contrato</th>
-            <th scope="col">Ações</th>
+            <th>ID</th>
+            <th>Data da Multa</th>
+            <th>Tipo de Infração</th>
+            <th>Valor da Multa</th>
+            <th>ID do Contrato</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
           {multas.map((multa) => (
             <tr key={multa.id}>
-              <th scope="row">{multa.id}</th>
+              <td>{multa.id}</td>
               <td>{multa.dataMulta}</td>
               <td>{multa.tipoInfracao}</td>
               <td>{multa.valorMulta}</td>
               <td>{multa.contratoId}</td>
-              <td>
-                <Link className="btn btn-primary mx-2" to={`/viewmulta/${multa.id}`}>Ver</Link>
-                <Link className="btn btn-outline-primary mx-2" to={`/editMulta/${multa.id}`}>Editar</Link>
-                <button className="btn btn-danger mx-2" onClick={() => deleteMulta(multa.id)}>Excluir</button>
+              <td className="d-flex justify-content-center">
+                {/* Botões com ícones para as ações */}
+                <Link to={`/viewmulta/${multa.id}`} className="btn btn-outline-info mx-2">
+                  <FaEye size={18} /> <span className="d-none d-sm-inline">Ver</span>
+                </Link>
+                <Link to={`/editMulta/${multa.id}`} className="btn btn-outline-warning mx-2">
+                  <FaEdit size={18} /> <span className="d-none d-sm-inline">Editar</span>
+                </Link>
+                <button onClick={() => deleteMulta(multa.id)} className="btn btn-outline-danger mx-2">
+                  <FaTrash size={18} /> <span className="d-none d-sm-inline">Excluir</span>
+                </button>
               </td>
             </tr>
           ))}

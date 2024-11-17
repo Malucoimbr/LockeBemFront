@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: flex-start;
 }
 
 .App-logo {
@@ -28,6 +28,7 @@
   color: #61dafb;
 }
 
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -55,4 +56,62 @@
   padding: 20px;
   overflow-y: auto;
   background-color: #f8f9fa;
+}
+
+
+.card-body-card {
+  padding: 1.25rem;
+    height: 50%;
+}
+
+.card-body-card .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.card-body-card h1 {
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+
+.card-body-card .text-muted {
+  font-size: 0.875rem;
+}
+
+.card-body-card .mb-0 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.card-body-card .text-danger,
+.card-body-card .text-success {
+  margin-right: 0.5rem;  /* Dá um espacinho entre o texto de porcentagem e o "since last week" */
 }

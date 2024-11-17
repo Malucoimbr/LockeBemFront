@@ -1,13 +1,10 @@
 
 .card-img-top {
-    width: 60%;
-    height: 150px;    
-    align-items: center;
-    justify-content: center;
-    display: flex;   
-    object-fit: cover;    
-  }
-  
+  width: 100%;
+  height: 200px; 
+  object-fit: cover; 
+}
+
 
   .card {
     align-items: center;
@@ -28,6 +25,7 @@
   .card-title {
     font-size: 1.1rem;     
     margin-bottom: 0.5rem; 
+    color: gray;
   }
   
 

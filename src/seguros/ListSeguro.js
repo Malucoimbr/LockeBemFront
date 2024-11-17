@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function ListSeguro() {
   const [seguros, setSeguros] = useState([]);
@@ -32,11 +33,11 @@ export default function ListSeguro() {
     }
   };
 
-  // O return precisa estar dentro da função do componente
   return (
     <div className="container">
-      <h2 className="text-center mt-5 mb-3">Lista de Seguros</h2>
+      <div className="py-4"></div>
       {erro && <div className="alert alert-danger">{erro}</div>}
+      <h2 className="text-center my-4">Lista de Seguros</h2>
       <table className="table border shadow">
         <thead>
           <tr>
@@ -50,9 +51,14 @@ export default function ListSeguro() {
             <tr key={seguro.id}>
               <td>{seguro.id}</td>
               <td>{seguro.cobertura}</td>
-              <td>
-                <Link to={`/editseguro/${seguro.id}`} className="btn btn-primary mx-2">Editar</Link>
-                <button onClick={() => deleteSeguro(seguro.id)} className="btn btn-danger mx-2">Excluir</button>
+              <td className="d-flex justify-content-center">
+                {/* Botões com ícones para as ações */}
+                <Link to={`/editseguro/${seguro.id}`} className="btn btn-outline-warning mx-2">
+                  <FaEdit size={18} /> <span className="d-none d-sm-inline">Editar</span>
+                </Link>
+                <button onClick={() => deleteSeguro(seguro.id)} className="btn btn-outline-danger mx-2">
+                  <FaTrash size={18} /> <span className="d-none d-sm-inline">Excluir</span>
+                </button>
               </td>
             </tr>
           ))}

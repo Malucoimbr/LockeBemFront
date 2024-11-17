@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+
 export default function ListContrato() {
   const [contratos, setContratos] = useState([]);
   const [clientes, setClientes] = useState({});
@@ -17,7 +19,6 @@ export default function ListContrato() {
     loadFuncionarios();
   }, []);
 
-  // Função para carregar os contratos
   const loadContratos = async () => {
     try {
       const result = await axios.get("http://localhost:8080/api/contrato-aluguel");
@@ -28,7 +29,6 @@ export default function ListContrato() {
     }
   };
 
-  // Função para carregar os clientes
   const loadClientes = async () => {
     try {
       const result = await axios.get("http://localhost:8080/api/cliente");
@@ -43,7 +43,6 @@ export default function ListContrato() {
     }
   };
 
-  // Função para carregar os carros
   const loadCarros = async () => {
     try {
       const result = await axios.get("http://localhost:8080/api/carro");
@@ -58,7 +57,6 @@ export default function ListContrato() {
     }
   };
 
-  // Função para carregar os seguros
   const loadSeguros = async () => {
     try {
       const result = await axios.get("http://localhost:8080/api/seguro");
@@ -73,7 +71,6 @@ export default function ListContrato() {
     }
   };
 
-  // Função para carregar os funcionários
   const loadFuncionarios = async () => {
     try {
       const result = await axios.get("http://localhost:8080/api/funcionario");
@@ -91,11 +88,11 @@ export default function ListContrato() {
   const deleteContrato = async (id) => {
     try {
       await axios.delete(`http://localhost:8080/api/contrato-aluguel/${id}`);
-      setError(''); // Limpa o erro ao excluir com sucesso
-      loadContratos(); // Recarrega a lista de contratos
+      setError('');
+      loadContratos();
     } catch (err) {
-      setError('Erro ao excluir contrato. Verifique o console para mais detalhes.');
-      console.error("Erro ao tentar excluir o contrato:", err);
+      setError('Erro ao excluir contrato');
+      console.error(err);
     }
   };
 
@@ -103,33 +100,41 @@ export default function ListContrato() {
     <div className="container">
       <div className="py-4"></div>
       {error && <div className="alert alert-danger">{error}</div>}
+      <h2 className="text-center my-4">Lista de Contratos</h2>
       <table className="table border shadow">
         <thead>
           <tr>
             <th scope="col">Código Contrato</th>
-            <th scope="col">Cliente</th>
+            <th scope="col">Código Cliente</th>
             <th scope="col">Carro Id</th>
             <th scope="col">Seguro Id</th>
-            <th scope="col">Funcionario Id</th>
             <th scope="col">Valor Pago</th>
+            <th scope="col">Data Inicio</th>
+            <th scope="col">Data fim</th>
             <th scope="col">Ações</th>
           </tr>
         </thead>
         <tbody>
           {contratos.map((contrato) => (
             <tr key={contrato.id}>
-              <th scope="row">{contrato.id}</th>
-              <td>{clientes[contrato.clienteId] || "Nome não encontrado"}</td>
-              <td>{contrato.carroId} </td>
-              <td>{contrato.seguroId}</td>
-              <td>{contrato.funcionarioId}</td>
+              <td>{contrato.id}</td>
+              <td>{contrato.clienteId}</td>
+              <td>{contrato.carroId}</td>
+              <td> {contrato.seguroId}</td>
               <td>{contrato.valorPago}</td>
-              <td>
-                <div className="d-flex justify-content-between">
-                  <Link className="btn btn-primary mx-2" to={`/viewcontrato/${contrato.id}`}>Ver</Link>
-                  <Link className="btn btn-outline-primary mx-2" to={`/editcontrato/${contrato.id}`}>Editar</Link>
-                  <button className="btn btn-danger mx-2" onClick={() => deleteContrato(contrato.id)}>Excluir</button>
-                </div>
+              <td>{contrato.dataInicio}</td>
+              <td>{contrato.dataFim}</td>
+              <td className="d-flex justify-content-center">
+                {/* Botões com ícones para as ações */}
+                <Link to={`/viewcontrato/${contrato.id}`} className="btn btn-outline-info mx-2">
+                  <FaEye size={18} /> <span className="d-none d-sm-inline">Ver</span>
+                </Link>
+                <Link to={`/editcontrato/${contrato.id}`} className="btn btn-outline-warning mx-2">
+                  <FaEdit size={18} /> <span className="d-none d-sm-inline">Editar</span>
+                </Link>
+                <button onClick={() => deleteContrato(contrato.id)} className="btn btn-outline-danger mx-2">
+                  <FaTrash size={18} /> <span className="d-none d-sm-inline">Deletar</span>
+                </button>
               </td>
             </tr>
           ))}

@@ -2,6 +2,7 @@ import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import Sidebar from './layout/Sidebar';
+
 import Home from './pages/Home';
 import './css/app.css';
 
@@ -70,8 +71,10 @@ function App() {
       <Router>
         <div className="layout-container">
           <Sidebar />
+        
           <div className="content">
             <Routes>
+            
               <Route exact path="/" element={<Home />} />
 
               {/* clientes */}

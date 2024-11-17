@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
 
 export default function ListFilial() {
   const [filiais, setFiliais] = useState([]);
@@ -31,8 +32,6 @@ export default function ListFilial() {
     }
   };
 
-
-
   if (loading) {
     return <div>Carregando...</div>;
   }
@@ -43,8 +42,10 @@ export default function ListFilial() {
 
   return (
     <div className="container">
-      <h2 className="my-4">Lista de Filiais</h2>
-      <table className="table">
+      <div className="py-4"></div>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <h2 className="text-center my-4">Lista de Filiais</h2>
+      <table className="table border shadow">
         <thead>
           <tr>
             <th>Código da Filial</th>
@@ -69,10 +70,17 @@ export default function ListFilial() {
               <td>{filial.estado}</td>
               <td>{filial.telefone}</td>
               <td>{filial.cnpj}</td>
-              <td>
-                <Link to={`/viewfilial/${filial.id}`} className="btn btn-info">Ver</Link>
-                <Link to={`/editfilial/${filial.id}`} className="btn btn-outline-primary mx-2">Editar</Link>
-                <button onClick={() => deleteFilial(filial.id)} className="btn btn-danger mx-2">Deletar</button>
+              <td className="d-flex justify-content-center">
+                {/* Botões com ícones para as ações */}
+                <Link to={`/viewfilial/${filial.id}`} className="btn btn-outline-info mx-2">
+                  <FaEye size={18} /> <span className="d-none d-sm-inline">Ver</span>
+                </Link>
+                <Link to={`/editfilial/${filial.id}`} className="btn btn-outline-warning mx-2">
+                  <FaEdit size={18} /> <span className="d-none d-sm-inline">Editar</span>
+                </Link>
+                <button onClick={() => deleteFilial(filial.id)} className="btn btn-outline-danger mx-2">
+                  <FaTrash size={18} /> <span className="d-none d-sm-inline">Deletar</span>
+                </button>
               </td>
             </tr>
           ))}
