@@ -76,7 +76,14 @@
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
-
+.spantext {
+  font-size: 1.3125rem;
+  font-weight: 600;
+}
+.card-aaa {
+  font-size: 1.3125rem;
+  margin-bottom: 0.5rem;
+}
 .row {
   display: flex;
   align-items: center;
@@ -115,3 +122,4 @@
 .card-body-card .text-success {
   margin-right: 0.5rem;  /* Dá um espacinho entre o texto de porcentagem e o "since last week" */
 }
+

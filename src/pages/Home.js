@@ -126,7 +126,7 @@ const Home = () => {
 
   return (
     <div className="row">
-      <h1>Analytics Dashboard</h1>
+      <h1 className="card-aaa"> <span className="spantext"> Analytics </span> Dashboard</h1>
       <div className="col-xl-6 col-xxl-5 d-flex">
         <div className="w-100">
           <div className="row">
