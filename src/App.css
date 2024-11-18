@@ -55,7 +55,7 @@
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
-  background-color: #f8f9fa;
+ 
 }
 
 
@@ -72,9 +72,30 @@
 
 
 .card-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: flex;
+  letter-spacing: -.025em;
+  color: #09090B;
+}
+
+.card-number{
   font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  display: flex;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.card-message{
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: start;
+  font-size: 12px;
 }
 .spantext {
   font-size: 1.3125rem;
@@ -84,6 +105,8 @@
   font-size: 1.3125rem;
   margin-bottom: 0.5rem;
 }
+
+
 .row {
   display: flex;
   align-items: center;
@@ -94,32 +117,155 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: #f0f0f0;
+
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 
-.card-body-card h1 {
+.dashboard-title {
   font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: start;
+  font-weight: 700;
+  font-size: 30px;
+  font-family: unset;
+}
+
+
+.card {
+  margin: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 16px; 
+  width: 100%;
+  border: 1px solid #d3d3d3; 
+}
+
+.card-1{
+  margin: 1rem;
+  padding-left: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 16px; 
+  width: 100%;
+  border: 1px solid #d3d3d3; 
+}
+
+
+.card-body {
+  text-align: center;
+ 
+  border-radius: 16px;
+  width: 100%;
+  height: 130px;
+  margin-top: 20px;
+
+ 
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.chart-container {
+  position: relative;
+  height: 500px;
+  padding: 60px;
   margin-top: 1rem;
-  margin-bottom: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #d3d3d3; 
 }
 
 
-.card-body-card .text-muted {
-  font-size: 0.875rem;
+.chart-title{
+  font-size: 16px;
+  font-weight: 600;
+  font-family: unset;
+  color: #000000;
+  padding-bottom: 20px;
 }
 
-.card-body-card .mb-0 {
+.table-container{
+  border-radius: 16px; 
+  width: 100%;
+  border: 1px solid #d3d3d3; 
+  height: 500px;
+  padding:30px;
+}
+
+.table-title{
+  font-size: 16px;
+  font-weight: 600;
+  font-family: unset;
+  color: #000000;
+}
+
+.table-subtitle{
+  padding-bottom: 5px;
+}
+
+.table-row{
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-icon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user{
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
+.user-name{
+  margin-bottom: 1px;
+}
+
+.user-reais{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15px;
+}
+
+.button-container {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  background-color: #f8f9fc; 
+  padding: 5px; 
+  border-radius: 8px;
+
 }
 
-.card-body-card .text-danger,
-.card-body-card .text-success {
-  margin-right: 0.5rem;  /* Dá um espacinho entre o texto de porcentagem e o "since last week" */
+.button-style {
+  background-color: transparent;
+  color: #495057; 
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 20px; 
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px; 
+  transition: all 0.3s ease;
 }
 
+.button-style:hover {
+  background-color: #495057; 
+  color: white; 
+  border-color: #495057; 
+}
+
+.button-style:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.5); 
+}

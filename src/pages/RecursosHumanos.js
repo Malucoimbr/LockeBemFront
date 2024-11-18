@@ -3,7 +3,7 @@ import { FaUser } from 'react-icons/fa';  // Ícone de usuário
 import Chart from 'chart.js/auto';
 import { Link } from 'react-router-dom';
 
-const Home = () => {
+const RecursosHumanos = () => {
   useEffect(() => {
     const ctxBar = document.getElementById('chartjs-dashboard-bar').getContext('2d');
     const chartBar = new Chart(ctxBar, {
@@ -45,7 +45,6 @@ const Home = () => {
       <Link to="/dashfinanceiro"className="button-style">Financeiro</Link>
       <Link to="/dashrh"className="button-style">RH</Link>
       </div>
-
       </div>
       <div className="col-lg-3 col-md-6">
         <div className="card-1">
@@ -177,4 +176,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default RecursosHumanos;

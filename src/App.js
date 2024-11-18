@@ -8,6 +8,9 @@ import './css/app.css';
 
 import Cars from './pages/Cars';  
 import Filiais from './pages/Filiais';  
+import Financeiro from './pages/Financeiro';
+import RecursosHumanos from './pages/RecursosHumanos';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // cliente
@@ -134,6 +137,9 @@ function App() {
               <Route exact path="/viewcontrato/:id" element={<ViewContrato />} />
               <Route exact path="/editcontrato/:id" element={<EditContrato />} />
               <Route path="/car-list" element={<CarList />} />
+
+              <Route path="/dashfinanceiro" element={<Financeiro />} />
+              <Route path="/dashrh" element={<RecursosHumanos />} />
             </Routes>
           </div>
         </div>
