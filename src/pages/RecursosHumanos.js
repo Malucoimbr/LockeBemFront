@@ -8,48 +8,52 @@ const RecursosHumanos = () => {
 
   const [funcionariosTotal, setFuncionariosTotal] = useState(null);
   const [funcionariosRecentes, setFuncionariosRecentes] = useState(null);
+  const [funcionariosRecentesList, setFuncionariosRecentesList] = useState(null);
   const [mediaDeFuncionarioPorFilial, setMediaDeFuncionarioPorFilial] = useState(null);
   const [loading, setLoading] = useState(true);
    
-
+  // Contagem de funcionários totais
   useEffect(() => {
     const fetchFuncionarioTotal = async () => {
-            const resposta = await axios.get('http://localhost:8080/api/funcionario/total');
-            setFuncionariosTotal(resposta.data); 
-            setLoading(false); 
-       
+      const resposta = await axios.get('http://localhost:8080/api/funcionario/total');
+      setFuncionariosTotal(resposta.data); 
+      setLoading(false); 
     };
-
     fetchFuncionarioTotal();
-}, []); 
+  }, []); 
 
-
-useEffect(() => {
-  const fetchFuncionariosRecentes = async () => {
-          const resposta = await axios.get('http://localhost:8080/api/funcionario/totalAdmitidosUltimoMes');
-          setFuncionariosRecentes(resposta.data); 
-          setLoading(false); 
-     
-  };
-
-  fetchFuncionariosRecentes();
-}, []); 
-
-
-useEffect(() => {
-  const fetchMediaDeFuncionariosPorFilial = async () => {
-          const resposta = await axios.get('http://localhost:8080/api/funcionario/mediaFuncionariosPorFilial');
-          setMediaDeFuncionarioPorFilial(resposta.data); 
-          setLoading(false); 
-     
-  };
-
-  fetchMediaDeFuncionariosPorFilial();
-}, []); 
-
-
+  // Contagem de funcionários recentes (último mês)
   useEffect(() => {
-    // Gráfico de funcionários por filial
+    const fetchFuncionariosRecentes = async () => {
+      const resposta = await axios.get('http://localhost:8080/api/funcionario/totalAdmitidosUltimoMes');
+      setFuncionariosRecentes(resposta.data); // Contagem total de funcionários recentes
+      setLoading(false); 
+    };
+    fetchFuncionariosRecentes();
+  }, []); 
+
+  // Lista completa de funcionários recentes (para a tabela)
+  useEffect(() => {
+    const fetchFuncionariosRecentesList = async () => {
+      const resposta = await axios.get('http://localhost:8080/api/funcionario/recentesAdmitidos');
+      setFuncionariosRecentesList(resposta.data); // Lista dos funcionários recentes
+      setLoading(false); 
+    };
+    fetchFuncionariosRecentesList();
+  }, []); 
+
+  // Média de funcionários por filial
+  useEffect(() => {
+    const fetchMediaDeFuncionariosPorFilial = async () => {
+      const resposta = await axios.get('http://localhost:8080/api/funcionario/mediaFuncionariosPorFilial');
+      setMediaDeFuncionarioPorFilial(resposta.data); 
+      setLoading(false); 
+    };
+    fetchMediaDeFuncionariosPorFilial();
+  }, []); 
+
+  // Gráfico de funcionários por filial
+  useEffect(() => {
     const ctxBar = document.getElementById('chartjs-dashboard-bar').getContext('2d');
     const chartBar = new Chart(ctxBar, {
       type: 'bar',
@@ -73,18 +77,12 @@ useEffect(() => {
       },
     });
 
+    console.log(funcionariosRecentesList)
+
     return () => {
       chartBar.destroy();
     };
   }, []);
-
-  // Dados dos funcionários recém admitidos
-  const recemAdmitidos = [
-    { nome: 'Carlos Pereira', cargo: 'Analista Financeiro', dataAdmissao: '2024-10-01' },
-    { nome: 'Ana Lima', cargo: 'Assistente Administrativo', dataAdmissao: '2024-10-03' },
-    { nome: 'Marcelo Costa', cargo: 'Desenvolvedor Frontend', dataAdmissao: '2024-09-25' },
-    { nome: 'Juliana Almeida', cargo: 'Gerente de TI', dataAdmissao: '2024-08-15' },
-  ];
 
   return (
     <div>
@@ -97,6 +95,7 @@ useEffect(() => {
             <Link to="/dashrh" className="button-style">RH</Link>
           </div>
         </div>
+
         <div className="col-lg-3 col-md-6">
           <div className="card-1">
             <div className="card-body">
@@ -128,39 +127,44 @@ useEffect(() => {
         </div>
 
         <div className="col-lg-3 col-md-6">
-    
         </div>
+
         <div className="col-lg-6 col-md-6">
-  <div className="chart-container">
-    <p className="chart-title">Funcionários por Filial</p>
-    <canvas id="chartjs-dashboard-bar" width="200" height="400"></canvas> 
-  </div>
-</div>
-
-<div className="col-lg-6 col-md-6">
-  <div className="chart-container2">
-    <div>
-      <p className="table-title">Recém Admitidos</p>
-      <p className="table-subtitle">Funcionários contratados recentemente.</p>
-    </div>
-
-    {recemAdmitidos.map((funcionario, index) => (
-      <div className="table-row" key={index}>
-        <div className="table-contract">
-          <div className="table-icon">
-            <FaUser style={{ fontSize: '1.5rem', marginRight: '10px', backgroundColor:'#343a40', borderRadius: '50%', width: '30px', height:'30px' }} />
-            <div className="user">
-              <p className="user-name">{funcionario.nome}</p>
-              <p className="user-email">{funcionario.cargo}</p>
-            </div>
+          <div className="chart-container">
+            <p className="chart-title">Funcionários por Filial</p>
+            <canvas id="chartjs-dashboard-bar" width="200" height="400"></canvas> 
           </div>
         </div>
-        <div className="user-reais">{funcionario.dataAdmissao}</div>
-      </div>
-    ))}
-  </div>
-</div>
 
+        <div className="col-lg-6 col-md-6">
+          <div className="chart-container2">
+            <div>
+              <p className="table-title">Recém Admitidos</p>
+              <p className="table-subtitle">Funcionários contratados recentemente.</p>
+            </div>
+
+            {funcionariosRecentesList && funcionariosRecentesList.length > 0 ? (
+              funcionariosRecentesList.map((funcionariosRecentesList, index) => (
+                <div className="table-row" key={index}>
+                  <div className="table-contract">
+                    <div className="table-icon">
+                      <FaUser style={{ fontSize: '1.5rem', marginRight: '10px', backgroundColor:'#343a40', borderRadius: '50%', width: '30px', height:'30px' }} />
+                      <div className="user">
+                        <p className="user-name">{funcionariosRecentesList.nome}</p>
+                      
+                        
+                        <p className="user-email">{funcionariosRecentesList.cargo}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="user-reais">{funcionariosRecentesList.dataAdmissao}</div>
+                </div>
+              ))
+            ) : (
+              <p>Nenhum funcionário recente encontrado.</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
