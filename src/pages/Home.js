@@ -96,7 +96,7 @@ const Home = () => {
 
   
       <div className="col-lg-6">
-        <div className="table-container">
+        <div className="chart-container2">
           <div>
             <p className="table-title">Recent Contracts</p>
             <p className="table-subtitle"> You made 265 sales this month.</p>

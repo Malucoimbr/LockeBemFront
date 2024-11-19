@@ -177,6 +177,14 @@
   border: 1px solid #d3d3d3; 
 }
 
+.chart-container2 {
+  position: relative;
+  height: 500px;
+  padding: 30px;
+  margin-top: 1rem;
+  border-radius: 16px;
+  border: 1px solid #d3d3d3; 
+}
 
 .chart-title{
   font-size: 16px;
