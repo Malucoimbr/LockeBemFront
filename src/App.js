@@ -52,6 +52,7 @@ import ViewCarro from './carros/ViewCarro';
 import ListCarro from './carros/ListCarro';
 import AddCarro from './carros/AddCarro';
 import ListDocumento from './carros/ListDocumento';
+import EditDocumentoCarro from './carros/EditDocumentoCarro';
 
 import Seguros from './pages/Seguros';
 import AddSeguro from './seguros/AddSeguro';
@@ -67,6 +68,7 @@ import ListContrato from './contratos_aluguel/ListContrato';
 import ViewContrato from './contratos_aluguel/ViewContrato';
 import EditContrato from './contratos_aluguel/EditContrato';
 import ViewMantencao from './manutencoes/ViewManutencao';
+
 
 function App() {
   return (
@@ -94,6 +96,7 @@ function App() {
               <Route exact path="/viewcarros/:id" element={<ViewCarro />} />
               <Route exact path="/listcarro" element={<ListCarro />} />
               <Route exact path="/listdocumento" element={<ListDocumento />} />
+              <Route exact path="/editdocumento/:id" element={<EditDocumentoCarro />} />
 
               {/* filiais */}
               <Route exact path="/addfilial" element={<AddFilial />} />

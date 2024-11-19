@@ -56,10 +56,6 @@ export default function ListDocumentos() {
               <td>{documento.placa}</td>
               <td>{documento.modelo}</td>
               <td className="d-flex justify-content-center">
-                {/* Botões com ícones para as ações */}
-                <Link to={`/viewdocumento/${documento.id}`} className="btn btn-outline-info mx-2">
-                  <FaEye size={18} /> <span className="d-none d-sm-inline">Ver</span>
-                </Link>
                 <Link to={`/editdocumento/${documento.id}`} className="btn btn-outline-warning mx-2">
                   <FaEdit size={18} /> <span className="d-none d-sm-inline">Editar</span>
                 </Link>

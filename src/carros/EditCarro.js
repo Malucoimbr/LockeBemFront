@@ -61,38 +61,19 @@ export default function EditCar() {
         setIsSubmitting(true);
         setError('');
         setSuccessMessage('');
-        setValidationErrors({});
-    
-        // Validação de campos
-        if (!validateForm()) {
-            setIsSubmitting(false);
-            return;
-        }
-    
-        const updatedCarro = {};
-    
-        // Enviar apenas os campos modificados
-        Object.keys(carro).forEach(key => {
-            if (carro[key] !== initialCarro[key]) { // Verifica se o valor foi alterado
-                updatedCarro[key] = carro[key];
-            }
-        });
     
         try {
-            await axios.put(`http://localhost:8080/api/carro/${id}`, updatedCarro);
+            await axios.put(`http://localhost:8080/api/carro/${id}`, carro);
             setSuccessMessage('Carro atualizado com sucesso!');
-            setIsSubmitting(false);
-            navigate('/listcars');
+            navigate('/listcarro');
         } catch (error) {
             console.error('Erro ao atualizar o carro!', error);
             setError('Erro ao atualizar o carro.');
+        } finally {
             setIsSubmitting(false);
         }
     };
-
-    if (loading) {
-        return <div>Carregando dados do carro...</div>;
-    }
+    
 
     return (
         <div className="container">
