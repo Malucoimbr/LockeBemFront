@@ -38,17 +38,6 @@ export default function Cars() {
             </div>
           </div>
         </div>
-
-        <div className="col-md-4 mb-4">
-          <div className="card shadow-sm h-100">
-            <div className="card-body d-flex flex-column justify-content-center align-items-center text-center">
-              <FaFileAlt size={40} className="mb-3" />
-              <h4>Editar Documentos</h4>
-              <p>Edite os documentos cadastrados.</p>
-              <Link to="/listdocumento" className="btn btn-info btn-lg w-100 mt-auto">Listar Documentos</Link>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
