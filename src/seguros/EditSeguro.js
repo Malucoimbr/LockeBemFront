@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { FaTimes } from 'react-icons/fa';
 
 export default function EditSeguro() {
   let navigate = useNavigate();
@@ -66,9 +67,19 @@ export default function EditSeguro() {
                 onChange={onInputChange} 
               />
             </div>
-
+            <div className="d-flex justify-content-between mt-4">
             <button type="submit" className="btn btn-outline-primary">Atualizar</button>
-            <Link className="btn btn-outline-danger mx-2" to="/listseguro">Cancelar</Link>
+            <Link className="btn btn-outline-danger d-flex align-items-center" to="/listseguro" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              marginLeft: '10px',
+              padding: '6px 12px',
+              fontSize: '1rem'
+            }}>
+                <FaTimes style={{ marginRight: '8px', fontSize: '1.2rem' }} />
+                Cancelar
+              </Link>
+            </div>
           </form>
         </div>
       </div>

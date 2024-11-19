@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { FaTimes } from 'react-icons/fa';
 
 export default function EditCar() {
     const { id } = useParams();
@@ -94,8 +95,10 @@ export default function EditCar() {
     }
 
     return (
-        <div>
-            <h2>Editar Carro</h2>
+        <div className="container">
+            <div className="row">
+            <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+            <h2 className="text-center m-4">Editar Carro</h2>
             {successMessage && <div className="alert alert-success">{successMessage}</div>}
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
@@ -164,14 +167,26 @@ export default function EditCar() {
                     {validationErrors.documentoCarroId && <div className="invalid-feedback">{validationErrors.documentoCarroId}</div>}
                 </div>
 
-                <button 
-                    type="submit" 
-                    className="btn btn-primary"
-                    disabled={isSubmitting || Object.keys(validationErrors).length > 0}
-                >
-                    {isSubmitting ? 'Salvando...' : 'Salvar Alterações'}
-                </button>
+                <div className="d-flex justify-content-between mt-4">
+                <button type="submit" className="btn btn-outline-primary" disabled={isSubmitting}>
+    Atualizar
+</button>
+
+            <Link className="btn btn-outline-danger d-flex align-items-center" to="/listcarro" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              marginLeft: '10px',
+              padding: '6px 12px',
+              fontSize: '1rem'
+            }}>
+                <FaTimes style={{ marginRight: '8px', fontSize: '1.2rem' }} />
+                Cancelar
+              </Link>
+            </div>
+
             </form>
+        </div>
+        </div>
         </div>
     );
 }

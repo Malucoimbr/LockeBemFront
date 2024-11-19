@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { FaTimes } from 'react-icons/fa';
 
 export default function EditFilial() {
   const navigate = useNavigate();
@@ -140,8 +141,19 @@ export default function EditFilial() {
                 required
               />
             </div>
+            <div className="d-flex justify-content-between mt-3">
             <button type="submit" className="btn btn-outline-primary">Atualizar</button>
-            <Link className="btn btn-outline-danger mx-2" to="/listfilial">Cancelar</Link>
+            <Link className="btn btn-outline-danger mx-2" to="/listfilial" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              marginLeft: '10px',
+              padding: '6px 12px',
+              fontSize: '1rem'
+            }}>
+              <FaTimes style={{ marginRight: '8px', fontSize: '1.2rem' }} /> 
+              Cancelar
+            </Link>
+            </div>
           </form>
         </div>
       </div>
