@@ -9,15 +9,28 @@
   }
   
   .sidebar-brand {
-    font-size: 18px;
+    font-size: 40px;
     font-weight: bold;
     text-align: center;
     display: block;
     margin-bottom: 20px;
+    margin-top: 26px;
     color: #fff;
     text-decoration: none;
     display: flex;
 
+  }
+
+  .logo{
+    margin-top: 12px;
+    width: 240px;
+    margin-right: 40px;
+    padding: 5px;
+    height: 120px;
+  }
+
+  .title-lockebem{
+    font-size: 20px;
   }
   
   .sidebar-nav {

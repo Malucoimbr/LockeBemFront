@@ -2,13 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaSlidersH, FaUser, FaTruck, FaBuilding, FaFileContract, FaUsers, FaShieldAlt, FaExclamationTriangle, FaTools } from "react-icons/fa";
 import '../css/sidebar.css';
+import logo from '../imgs/logo.png';
 
 export default function Sidebar() {
   return (
     <nav id="sidebar" className="sidebar js-sidebar">
       <div className="sidebar-content js-simplebar">
-        <a className="sidebar-brand" href="/">
-          <span className="align-middle">Lokebem</span>
+        <a  href="/">
+          <div>     <img src={logo}  className="logo"></img>
+          </div>
+     
         </a>
         <ul className="sidebar-nav">
           <li className="sidebar-header">Páginas</li>
