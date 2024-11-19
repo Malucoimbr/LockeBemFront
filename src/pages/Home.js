@@ -46,41 +46,51 @@ const Home = () => {
 
     fetchDataAndRenderCharts();
 
-  }, []); // Esse efeito será executado uma vez no carregamento do componente
+  }, []);
 
-  // Função que irá buscar os dados e renderizar os gráficos
   const fetchDataAndRenderCharts = async () => {
     try {
-      // Gráfico de Barras Horizontal
-      const responseBairro = await axios.get('http://localhost:8080/api/cliente/porBairro'); // Substitua pela sua rota correta
+      const responseBairro = await axios.get('http://localhost:8080/api/cliente/porBairro');
       const dataBairro = responseBairro.data;
       const labelsBairro = Object.keys(dataBairro);
       const valuesBairro = Object.values(dataBairro);
-
-      const ctxBarHorizontal = document.getElementById('chartjs-dashboard-bar-horizontal').getContext('2d');
-      new Chart(ctxBarHorizontal, {
-        type: 'bar',
+  
+      const ctx = document.getElementById('chartjs-dashboard-bar').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar', 
         data: {
-          labels: labelsBairro,
+          labels: labelsBairro, 
           datasets: [
             {
-              label: 'Clientes por Bairro',
-              backgroundColor: '#36b9cc',
-              data: valuesBairro,
+              label: 'Clientes por Bairro', 
+              backgroundColor: '#36b9cc', 
+              data: valuesBairro, 
             },
           ],
         },
         options: {
-          maintainAspectRatio: false,
-          plugins: { legend: { display: true } },
+          indexAxis: 'y', 
+          responsive: true, 
+          plugins: {
+            legend: {
+              position: 'top', 
+            },
+          },
           scales: {
-            x: { ticks: { stepSize: 1 }, grid: { display: false } },
-            y: { grid: { display: false } },
+            x: {
+              beginAtZero: true, 
+            },
+            y: {
+              ticks: {
+                autoSkip: false, 
+              },
+            },
           },
         },
       });
+    
+  
 
-      // Gráfico de Barras Verticais (ou outro gráfico desejado)
       const responseAlugados = await axios.get('http://localhost:8080/api/contrato-aluguel/carrosAlugadosPorTipo');
       const dataAlugados = responseAlugados.data;
       const labelsAlugados = Object.keys(dataAlugados);
@@ -168,18 +178,18 @@ const Home = () => {
         <div className="col-lg-6">
           <div className="chart-container">
             <p className="chart-title">Quantidade de Carros Alugados por Tipo</p>
-            <canvas id="chartjs-dashboard-bar-vertical"></canvas> {/* Alterei o ID aqui */}
+            <canvas id="chartjs-dashboard-bar-vertical"></canvas> 
           </div>
         </div>
    
         <div className="col-lg-6">
-          <div className="chart-container">
-            <p className="chart-title">Clientes por Bairro</p>
-            <canvas id="chartjs-dashboard-bar-horizontal"></canvas>
-          </div>
+        <div className="chart-container">
+          <p className="chart-title">Clientes por Bairro</p>
+          <canvas id="chartjs-dashboard-bar"></canvas>
         </div>
-          </div>
-        </div>
+      </div>
+      </div>
+      </div>
 
   );
 };
