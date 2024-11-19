@@ -1,179 +1,186 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';  // Ícone de usuário
 import Chart from 'chart.js/auto';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Home = () => {
+  const [dataDisponiveis, setDataDisponiveis] = useState(null); 
+  const [dataAlugados, setDataAlugados] = useState(null); 
+  const [dataManutencao, setDataManutencao] = useState(null);
+  const [dataContratos, setDataContratos] = useState(null);
+  const [clientesPorBairro, setClientesPorBairro] = useState(null);
+
   useEffect(() => {
-    const ctxBar = document.getElementById('chartjs-dashboard-bar').getContext('2d');
-    const chartBar = new Chart(ctxBar, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [
-          {
-            label: 'This year',
-            backgroundColor: '#4e73df',
-            data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          y: { ticks: { stepSize: 20 }, grid: { display: false } },
-          x: { grid: { display: false } },
-        },
-      },
+    axios.get("http://localhost:8080/api/carro/qtdedisponiveis")
+      .then(response => {
+        setDataDisponiveis(response.data);  // Corrigido o acesso aos dados
+      })
+      .catch(error => {
+        console.error("There was an error fetching the data: ", error);
+      });
+  
+    axios.get("http://localhost:8080/api/contrato-aluguel/alugadosHoje")
+    .then(response => {
+      setDataAlugados(response.data);  // Corrigido o acesso aos dados
+    })
+    .catch(error => {
+      console.error("There was an error fetching the data: ", error);
     });
 
-    return () => {
-      chartBar.destroy();
-    };
-  }, []);
+    axios.get("http://localhost:8080/api/manutencao/manutencaoHoje")
+    .then(response => {
+      setDataManutencao(response.data);  // Corrigido o acesso aos dados
+    })
+    .catch(error => {
+      console.error("There was an error fetching the data: ", error);
+    });
+
+    axios.get("http://localhost:8080/api/contrato-aluguel/contratosEmAndamentoHoje")
+    .then(response => {
+      setDataContratos(response.data);  // Corrigido o acesso aos dados
+    })
+    .catch(error => {
+      console.error("There was an error fetching the data: ", error);
+    });
+
+    fetchDataAndRenderCharts();
+
+  }, []); // Esse efeito será executado uma vez no carregamento do componente
+
+  // Função que irá buscar os dados e renderizar os gráficos
+  const fetchDataAndRenderCharts = async () => {
+    try {
+      // Gráfico de Barras Horizontal
+      const responseBairro = await axios.get('http://localhost:8080/api/cliente/porBairro'); // Substitua pela sua rota correta
+      const dataBairro = responseBairro.data;
+      const labelsBairro = Object.keys(dataBairro);
+      const valuesBairro = Object.values(dataBairro);
+
+      const ctxBarHorizontal = document.getElementById('chartjs-dashboard-bar-horizontal').getContext('2d');
+      new Chart(ctxBarHorizontal, {
+        type: 'bar',
+        data: {
+          labels: labelsBairro,
+          datasets: [
+            {
+              label: 'Clientes por Bairro',
+              backgroundColor: '#36b9cc',
+              data: valuesBairro,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: { legend: { display: true } },
+          scales: {
+            x: { ticks: { stepSize: 1 }, grid: { display: false } },
+            y: { grid: { display: false } },
+          },
+        },
+      });
+
+      // Gráfico de Barras Verticais (ou outro gráfico desejado)
+      const responseAlugados = await axios.get('http://localhost:8080/api/contrato-aluguel/carrosAlugadosPorTipo');
+      const dataAlugados = responseAlugados.data;
+      const labelsAlugados = Object.keys(dataAlugados);
+      const valuesAlugados = Object.values(dataAlugados);
+
+      const ctxBarVertical = document.getElementById('chartjs-dashboard-bar-vertical').getContext('2d');
+      new Chart(ctxBarVertical, {
+        type: 'bar',
+        data: {
+          labels: labelsAlugados,
+          datasets: [
+            {
+              label: 'Alugados Hoje',
+              backgroundColor: '#ffb84d',
+              data: valuesAlugados,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: { legend: { display: true } },
+          scales: {
+            x: { ticks: { stepSize: 1 }, grid: { display: false } },
+            y: { grid: { display: false } },
+          },
+        },
+      });
+
+    } catch (error) {
+      console.error('Erro ao buscar dados para os gráficos:', error);
+    }
+  };
 
   return (
     <div>
+      <div className="row">
+        <h1 className="dashboard-title">Dashboard</h1>
+        <div>
+          <div className="button-container">
+            <Link to="/" className="button-style">Operacional</Link>
+            <Link to="/dashfinanceiro"className="button-style">Financeiro</Link>
+            <Link to="/dashrh"className="button-style">RH</Link>
+          </div>
+        </div>
+        <div className="col-lg-3 col-md-6">
+          <div className="card-1">
+            <div className="card-body">
+              <h5 className="card-title">Veículos Disponíveis</h5>
+              <h1 className="card-number">{dataDisponiveis !== null ? dataDisponiveis : 'Carregando...'}</h1>
+              <p className="card-message">veículos</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-3 col-md-6">
+          <div className="card-1">
+            <div className="card-body">
+              <h5 className="card-title">Veículos Alugados</h5>
+              <h1 className="card-number">{dataAlugados !== null ? dataAlugados : 'Carregando...'}</h1>
+              <p className="card-message">veículos</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-3 col-md-6">
+          <div className="card-1">
+            <div className="card-body">
+              <h5 className="card-title">Veículos em Manutenção</h5>
+              <h1 className="card-number">{dataManutencao !== null ? dataManutencao : 'Carregando...'}</h1>
+              <p className="card-message">veículos</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-3 col-md-6">
+          <div className="card-1">
+            <div className="card-body">
+              <h5 className="card-title">Contratos Ativos</h5>
+              <h1 className="card-number">{dataContratos !== null ? dataContratos : 'Carregando...'}</h1>
+              <p className="card-message">contratos</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-6">
+          <div className="chart-container">
+            <p className="chart-title">Quantidade de Carros Alugados por Tipo</p>
+            <canvas id="chartjs-dashboard-bar-vertical"></canvas> {/* Alterei o ID aqui */}
+          </div>
+        </div>
    
-
-    <div className="row">
-      <h1 className="dashboard-title">Dashboard</h1>
-      <div>
-      <div className="button-container">
-      <Link to="/" className="button-style">Operacional</Link>
-      <Link to="/dashfinanceiro"className="button-style">Financeiro</Link>
-      <Link to="/dashrh"className="button-style">RH</Link>
-      </div>
-
-      </div>
-      <div className="col-lg-3 col-md-6">
-        <div className="card-1">
-          <div className="card-body">
-            <h5 className="card-title">Total Revenue</h5>
-            <h1 className="card-number">$45,231.89</h1>
-            <p className="card-message">+20.1% from last month</p>
+        <div className="col-lg-6">
+          <div className="chart-container">
+            <p className="chart-title">Clientes por Bairro</p>
+            <canvas id="chartjs-dashboard-bar-horizontal"></canvas>
           </div>
         </div>
-      </div>
-
-      <div className="col-lg-3 col-md-6">
-        <div className="card-1">
-          <div className="card-body">
-            <h5 className="card-title">Subscriptions</h5>
-            <h1 className="card-number">+2350</h1>
-            <p className="card-message">+180.1% from last month</p>
           </div>
         </div>
-      </div>
 
-      <div className="col-lg-3 col-md-6">
-        <div className="card-1">
-          <div className="card-body">
-            <h5 className="card-title">Sales</h5>
-            <h1 className="card-number">+12,234</h1>
-            <p className="card-message">+19% from last month</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="col-lg-3 col-md-6">
-        <div className="card-1">
-          <div className="card-body">
-            <h5 className="card-title">Active Now</h5>
-            <h1 className="card-number">+573</h1>
-            <p className="card-message">+201 since last hour</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="col-lg-6">
-        <div className="chart-container">
-          <p className="chart-title">Overview</p>
-          <canvas id="chartjs-dashboard-bar"></canvas>
-        </div>
-      </div>
-
-  
-      <div className="col-lg-6">
-        <div className="chart-container2">
-          <div>
-            <p className="table-title">Recent Contracts</p>
-            <p className="table-subtitle"> You made 265 sales this month.</p>
-          </div>
-
-   
-          <div className="table-row">
-            <div className="table-contract">
-              <div className="table-icon">
-              <FaUser style={{ fontSize: '1.5rem', marginRight: '10px',   backgroundColor:'#343a40', borderRadius: '50%', width: '100%', height:'30px',}} />
-              <div className="user">
-                <p className="user-name">Olivia Martin</p>
-                <p className="user-email">olivia.martin@email.com</p>
-              </div>
-              </div>
-            </div>
-            <div className="user-reais">+$1,999.00</div>
-          </div>
-
-
-          <div className="table-row">
-            <div className="table-contract">
-              <div className="table-icon">
-              <FaUser style={{ fontSize: '1.5rem', marginRight: '10px',   backgroundColor:'#343a40', borderRadius: '50%', width: '100%', height:'30px',}} />
-              <div className="user">
-                <p className="user-name">Olivia Martin</p>
-                <p className="user-email">olivia.martin@email.com</p>
-              </div>
-              </div>
-            </div>
-            <div className="user-reais">+$1,999.00</div>
-          </div>
-
-          <div className="table-row">
-            <div className="table-contract">
-              <div className="table-icon">
-              <FaUser style={{ fontSize: '1.5rem', marginRight: '10px',   backgroundColor:'#343a40', borderRadius: '50%', width: '100%', height:'30px',}} />
-              <div className="user">
-                <p className="user-name">Olivia Martin</p>
-                <p className="user-email">olivia.martin@email.com</p>
-              </div>
-              </div>
-            </div>
-            <div className="user-reais">+$1,999.00</div>
-          </div>
-
-          <div className="table-row">
-            <div className="table-contract">
-              <div className="table-icon">
-              <FaUser style={{ fontSize: '1.5rem', marginRight: '10px',   backgroundColor:'#343a40', borderRadius: '50%', width: '100%', height:'30px',}} />
-              <div className="user">
-                <p className="user-name">Olivia Martin</p>
-                <p className="user-email">olivia.martin@email.com</p>
-              </div>
-              </div>
-            </div>
-            <div className="user-reais">+$1,999.00</div>
-          </div>
-
-
-
-          <div className="table-row">
-            <div className="table-contract">
-              <div className="table-icon">
-              <FaUser style={{ fontSize: '1.5rem', marginRight: '10px',   backgroundColor:'#343a40', borderRadius: '50%', width: '100%', height:'30px',}} />
-              <div className="user">
-                <p className="user-name">Olivia Martin</p>
-                <p className="user-email">olivia.martin@email.com</p>
-              </div>
-              </div>
-            </div>
-            <div className="user-reais">+$1,999.00</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
   );
 };
 
