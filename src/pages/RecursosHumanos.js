@@ -1,9 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUser } from 'react-icons/fa';  // Ícone de usuário
 import Chart from 'chart.js/auto';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const RecursosHumanos = () => {
+
+  const [funcionariosTotal, setFuncionariosTotal] = useState(null);
+  const [funcionariosRecentes, setFuncionariosRecentes] = useState(null);
+  const [mediaDeFuncionarioPorFilial, setMediaDeFuncionarioPorFilial] = useState(null);
+  const [loading, setLoading] = useState(true);
+   
+
+  useEffect(() => {
+    const fetchFuncionarioTotal = async () => {
+            const resposta = await axios.get('http://localhost:8080/api/funcionario/total');
+            setFuncionariosTotal(resposta.data); 
+            setLoading(false); 
+       
+    };
+
+    fetchFuncionarioTotal();
+}, []); 
+
+
+useEffect(() => {
+  const fetchFuncionariosRecentes = async () => {
+          const resposta = await axios.get('http://localhost:8080/api/funcionario/totalAdmitidosUltimoMes');
+          setFuncionariosRecentes(resposta.data); 
+          setLoading(false); 
+     
+  };
+
+  fetchFuncionariosRecentes();
+}, []); 
+
+
+useEffect(() => {
+  const fetchMediaDeFuncionariosPorFilial = async () => {
+          const resposta = await axios.get('http://localhost:8080/api/funcionario/mediaFuncionariosPorFilial');
+          setMediaDeFuncionarioPorFilial(resposta.data); 
+          setLoading(false); 
+     
+  };
+
+  fetchMediaDeFuncionariosPorFilial();
+}, []); 
+
+
   useEffect(() => {
     // Gráfico de funcionários por filial
     const ctxBar = document.getElementById('chartjs-dashboard-bar').getContext('2d');
@@ -57,7 +101,7 @@ const RecursosHumanos = () => {
           <div className="card-1">
             <div className="card-body">
               <h5 className="card-title">Total de Funcionários</h5>
-              <h1 className="card-number">$45,231.89</h1>
+              <h1 className="card-number">{funcionariosTotal}</h1>
               <p className="card-message">+20.1% from last month</p>
             </div>
           </div>
@@ -66,8 +110,8 @@ const RecursosHumanos = () => {
         <div className="col-lg-3 col-md-6">
           <div className="card-1">
             <div className="card-body">
-              <h5 className="card-title">Funcionários Recém Admitidos</h5>
-              <h1 className="card-number">+2350</h1>
+              <h5 className="card-title">Funcionários Recém-Admitidos</h5>
+              <h1 className="card-number">{funcionariosRecentes}</h1>
               <p className="card-message">+180.1% from last month</p>
             </div>
           </div>
@@ -77,7 +121,7 @@ const RecursosHumanos = () => {
           <div className="card-1">
             <div className="card-body">
               <h5 className="card-title">Média de Funcionários Por Filial</h5>
-              <h1 className="card-number">+12,234</h1>
+              <h1 className="card-number">{mediaDeFuncionarioPorFilial}</h1>
               <p className="card-message">+19% from last month</p>
             </div>
           </div>
